@@ -4,6 +4,14 @@
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
 
+/*
+  Tailwind v4 — theme + utilities only (no preflight) so the React hero island's
+  utility classes work without resetting the rest of the site's Bear Blog styles.
+ */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
 :root {
 	--accent: #2337ff;
 	--accent-dark: #000d8a;
@@ -138,4 +146,185 @@ hr {
 	clip-path: inset(50%);
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+}
+
+/*
+  === Shader hero shell (applied to every page via the Hero layout) ===
+  Placed after the Bear Blog rules above so these unlayered rules win and the
+  content reads as light text on the black card over the shader background.
+ */
+body {
+	background: #000;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.shader-nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 20;
+	display: flex;
+	justify-content: center;
+	gap: 2rem;
+	padding: 1rem 1.5rem;
+	background: #000;
+	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+	font-size: 1.125rem;
+}
+.shader-nav a {
+	color: hsl(320, 100%, 70%);
+	text-decoration: none;
+	transition: color 0.15s;
+}
+.shader-nav a:hover {
+	color: hsl(220, 100%, 70%);
+	text-decoration: underline;
+}
+.shader-nav a.active {
+	text-decoration: underline;
+	text-underline-offset: 4px;
+}
+
+.card-wrap {
+	position: relative;
+	z-index: 10;
+	flex: 1 0 auto;
+	width: 100%;
+	max-width: none;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 5rem 0 1.5rem;
+}
+.card-wrap.center {
+	align-items: center;
+}
+
+.shader-footer {
+	position: relative;
+	z-index: 10;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1.25rem;
+	padding: 1rem 1.5rem;
+	background: #000;
+}
+.shader-footer a {
+	display: inline-flex;
+	color: hsl(320, 100%, 70%);
+	transition: color 0.15s;
+}
+.shader-footer a:hover {
+	color: hsl(220, 100%, 70%);
+}
+
+.card {
+	width: 94vw;
+	max-width: 1100px;
+	background: #000;
+	color: #fff;
+	border-radius: 1.5rem;
+	padding: 2.5rem 2.75rem;
+	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+.card-centered {
+	text-align: center;
+	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.card-wide {
+	max-width: 1600px;
+	width: 96vw;
+}
+.card-fit {
+	width: fit-content;
+	max-width: 94vw;
+}
+
+/* Light text + accent links inside the card */
+.card :is(h1, h2, h3, h4, h5, h6) {
+	color: #fff;
+}
+.card a {
+	color: hsl(220, 100%, 70%);
+}
+.card a:hover {
+	color: hsl(320, 100%, 70%);
+}
+.card :is(.job-dates, .job-meta, .coursework, .authors, .meta, .date) {
+	color: rgba(255, 255, 255, 0.65);
+}
+.card .papers li {
+	border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+/* Author names in the papers list (own name is bold within) */
+.card .authors {
+	color: hsl(320, 100%, 70%);
+}
+.card .title:hover,
+.card li a:hover :is(h4, .date) {
+	color: hsl(320, 100%, 70%);
+}
+
+/* Homepage hero card */
+.card .hero-name {
+	color: hsl(320, 100%, 70%);
+	white-space: nowrap;
+	text-transform: uppercase;
+	font-size: clamp(2rem, 6vw, 4rem);
+	font-weight: 400;
+	line-height: 1.1;
+	margin-bottom: 1rem;
+}
+.card .hero-tagline {
+	font-size: 1.25rem;
+	margin-bottom: 0;
+}
+/* === Light mode: flip black surfaces to white + dark text === */
+:root[data-theme='light'] body {
+	background: #fff;
+}
+:root[data-theme='light'] .shader-nav,
+:root[data-theme='light'] .shader-footer {
+	background: #fff;
+}
+:root[data-theme='light'] .card {
+	background: #fff;
+	color: #000;
+	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+:root[data-theme='light'] .card :is(h1, h2, h3, h4, h5, h6) {
+	color: #000;
+}
+:root[data-theme='light'] .card :is(.job-dates, .job-meta, .coursework, .authors, .meta, .date) {
+	color: rgba(0, 0, 0, 0.6);
+}
+:root[data-theme='light'] .card .papers li {
+	border-bottom-color: rgba(0, 0, 0, 0.12);
+}
+/* In light mode, pink text becomes the shader's blue (not black). */
+:root[data-theme='light'] .shader-nav a,
+:root[data-theme='light'] .shader-footer a,
+:root[data-theme='light'] .card .hero-name,
+:root[data-theme='light'] .card .authors {
+	color: hsl(220, 100%, 70%);
+}
+
+@media (max-width: 720px) {
+	.shader-nav {
+		justify-content: flex-start;
+		gap: 1rem;
+		font-size: 1rem;
+		padding: 0.75rem 3rem 0.75rem 1rem;
+	}
+	.card {
+		padding: 1.5rem 1.25rem;
+	}
+	.card .hero-name {
+		white-space: normal;
+	}
 }

@@ -1,7 +1,5 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
+import Hero from '../layouts/Hero.astro';
 import { SITE_TITLE } from '../consts';
 
 // Pulled from Google Scholar. Update as new papers come out.
@@ -33,15 +31,8 @@ const papers = [
 ];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={`Papers | ${SITE_TITLE}`} description="Publications by Chandreyi (Zini) Chakraborty." />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>Papers</h1>
+<Hero title={`Papers | ${SITE_TITLE}`} description="Publications by Chandreyi (Zini) Chakraborty." fit>
+	<h1>Papers</h1>
 			<p>Research in interpretability, ML systems, and NLP.</p>
 			<ul class="papers">
 				{
@@ -70,10 +61,7 @@ const papers = [
 					))
 				}
 			</ul>
-		</main>
-		<Footer />
-	</body>
-</html>
+</Hero>
 
 <style>
 	.papers {
@@ -93,7 +81,7 @@ const papers = [
 		font-weight: 700;
 		font-size: 1.1rem;
 		color: inherit;
-		text-decoration: none;
+		text-decoration: underline;
 	}
 	.title:hover {
 		color: var(--accent);
@@ -101,13 +89,11 @@ const papers = [
 	.authors {
 		display: block;
 		margin-top: 0.25rem;
-		color: rgb(var(--gray-dark));
 		font-size: 0.95rem;
 	}
 	.meta {
 		display: block;
 		margin-top: 0.25rem;
-		color: rgb(var(--gray));
 		font-size: 0.9rem;
 		font-style: italic;
 	}

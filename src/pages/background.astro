@@ -1,7 +1,5 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
+import Hero from '../layouts/Hero.astro';
 import { SITE_TITLE } from '../consts';
 
 const experience = [
@@ -40,67 +38,45 @@ const experience = [
 ];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={`About | ${SITE_TITLE}`} description="About Chandreyi (Zini) Chakraborty." />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>About</h1>
-			<p>
-				{/* TODO: a paragraph or two about you — background, what you care about, what you're up to now. */}
-				I'm a Computer Science student at Georgia Tech working at the intersection of ML systems,
-				interpretability, and NLP. Replace this with your own story.
-			</p>
-
-			<h2>Experience</h2>
-			{
-				experience.map((job) => (
-					<section class="job">
-						<div class="job-head">
-							<span class="job-title">{job.title}</span>
-							<span class="job-dates">{job.dates}</span>
-						</div>
-						<div class="job-meta">
-							{job.org} · {job.location}
-						</div>
-						<ul>
-							{job.bullets.map((bullet) => (
-								<li>{bullet}</li>
-							))}
-						</ul>
-					</section>
-				))
-			}
-
-			<h2>Education</h2>
+<Hero title={`Background | ${SITE_TITLE}`} description="Background of Chandreyi (Zini) Chakraborty.">
+	<h2>Experience</h2>
+	{
+		experience.map((job) => (
 			<section class="job">
 				<div class="job-head">
-					<span class="job-title">Georgia Institute of Technology</span>
-					<span class="job-dates">Atlanta, GA</span>
+					<span class="job-title">{job.title}</span>
+					<span class="job-dates">{job.dates}</span>
+				</div>
+				<div class="job-meta">
+					{job.org} · {job.location}
 				</div>
 				<ul>
-					<li>
-						<strong>M.S. in Computer Science</strong> — Concentration: Machine Learning, Research
-						Project Option (May 2026)
-					</li>
-					<li>
-						<strong>B.S. in Computer Science</strong> — Concentration: AI and Networks, Research
-						Option (May 2025)
-					</li>
+					{job.bullets.map((bullet) => (
+						<li>{bullet}</li>
+					))}
 				</ul>
-				<p class="coursework">
-					<strong>Relevant coursework:</strong> Systems for ML, HW/SW for ML, NLP, Deep Learning,
-					Computer Vision, High-Performance Computing, AI, ML, Data Structures, Algorithms,
-					Databases, Computer Systems/Networks, OOP
-				</p>
 			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+		))
+	}
+
+	<h2>Education</h2>
+	<section class="job">
+		<div class="job-head">
+			<span class="job-title">Georgia Institute of Technology</span>
+			<span class="job-dates">August 2022 – May 2026</span>
+		</div>
+		<ul>
+			<li>
+				<strong>M.S. in Computer Science</strong> — Concentration: Machine Learning, Research
+				Project Option (May 2026)
+			</li>
+			<li>
+				<strong>B.S. in Computer Science</strong> — Concentration: AI and Networks, Research Option
+				(May 2025)
+			</li>
+		</ul>
+	</section>
+</Hero>
 
 <style>
 	.job {
@@ -118,12 +94,10 @@ const experience = [
 		font-size: 1.1rem;
 	}
 	.job-dates {
-		color: rgb(var(--gray));
 		font-size: 0.9rem;
 		white-space: nowrap;
 	}
 	.job-meta {
-		color: rgb(var(--gray-dark));
 		font-size: 0.95rem;
 		margin-top: 0.15rem;
 	}
@@ -132,10 +106,5 @@ const experience = [
 	}
 	.job li {
 		margin-bottom: 0.3rem;
-	}
-	.coursework {
-		color: rgb(var(--gray-dark));
-		font-size: 0.95rem;
-		margin-top: 0.6rem;
 	}
 </style>
