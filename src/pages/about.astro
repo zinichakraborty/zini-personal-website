@@ -1,0 +1,141 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+const experience = [
+	{
+		title: 'Software Engineer Intern',
+		org: 'Bloomberg',
+		location: 'New York, NY',
+		dates: 'June 2025 – August 2025',
+		bullets: [
+			'Built first-of-its-kind, full-stack C++ app for transparent portfolio aggregations via the Bloomberg Terminal',
+			'Reduced runtime from tens of minutes to seconds with a lightweight, parallelized backend service and UI',
+			'Coordinated with cross-team developers to integrate Splunk API trace calls, diagnosing client-reported issues',
+		],
+	},
+	{
+		title: 'Machine Learning Teaching Assistant',
+		org: 'Georgia Institute of Technology',
+		location: 'Atlanta, GA',
+		dates: 'August 2024 – May 2026',
+		bullets: [
+			'Building retrieval-augmented fine-tuned EdStem LLM agent with dynamic databases for Socratic Q&A',
+			'Automate assignment grading through code image detection, instruct students in project design and office hours',
+		],
+	},
+	{
+		title: 'Solutions Engineering Intern',
+		org: 'Deloitte Consulting',
+		location: 'Nashville, TN',
+		dates: 'June 2024 – July 2024',
+		bullets: [
+			'Handle end-to-end production in State of Tennessee Eligibility Benefits Management System Portals in Java Spring',
+			'Discuss with clients on defects and enhancements, actualize SummerEBT Appeals, 600K+ eligible yearly',
+			'Develop DevOps Python automation to restart failing JVMs and Streamlit LLM tool to recommend course paths',
+		],
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`About | ${SITE_TITLE}`} description="About Chandreyi (Zini) Chakraborty." />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>About</h1>
+			<p>
+				{/* TODO: a paragraph or two about you — background, what you care about, what you're up to now. */}
+				I'm a Computer Science student at Georgia Tech working at the intersection of ML systems,
+				interpretability, and NLP. Replace this with your own story.
+			</p>
+
+			<h2>Experience</h2>
+			{
+				experience.map((job) => (
+					<section class="job">
+						<div class="job-head">
+							<span class="job-title">{job.title}</span>
+							<span class="job-dates">{job.dates}</span>
+						</div>
+						<div class="job-meta">
+							{job.org} · {job.location}
+						</div>
+						<ul>
+							{job.bullets.map((bullet) => (
+								<li>{bullet}</li>
+							))}
+						</ul>
+					</section>
+				))
+			}
+
+			<h2>Education</h2>
+			<section class="job">
+				<div class="job-head">
+					<span class="job-title">Georgia Institute of Technology</span>
+					<span class="job-dates">Atlanta, GA</span>
+				</div>
+				<ul>
+					<li>
+						<strong>M.S. in Computer Science</strong> — Concentration: Machine Learning, Research
+						Project Option (May 2026)
+					</li>
+					<li>
+						<strong>B.S. in Computer Science</strong> — Concentration: AI and Networks, Research
+						Option (May 2025)
+					</li>
+				</ul>
+				<p class="coursework">
+					<strong>Relevant coursework:</strong> Systems for ML, HW/SW for ML, NLP, Deep Learning,
+					Computer Vision, High-Performance Computing, AI, ML, Data Structures, Algorithms,
+					Databases, Computer Systems/Networks, OOP
+				</p>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.job {
+		margin-bottom: 1.75rem;
+	}
+	.job-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+	.job-title {
+		font-weight: 700;
+		font-size: 1.1rem;
+	}
+	.job-dates {
+		color: rgb(var(--gray));
+		font-size: 0.9rem;
+		white-space: nowrap;
+	}
+	.job-meta {
+		color: rgb(var(--gray-dark));
+		font-size: 0.95rem;
+		margin-top: 0.15rem;
+	}
+	.job ul {
+		margin-top: 0.6rem;
+	}
+	.job li {
+		margin-bottom: 0.3rem;
+	}
+	.coursework {
+		color: rgb(var(--gray-dark));
+		font-size: 0.95rem;
+		margin-top: 0.6rem;
+	}
+</style>

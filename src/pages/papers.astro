@@ -1,0 +1,114 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+// Pulled from Google Scholar. Update as new papers come out.
+const papers = [
+	{
+		title: 'On the Quantization Robustness of Diffusion Language Models in Coding Benchmarks',
+		authors: 'A Gupta, G Deshpande, C Chakraborty',
+		venue: 'arXiv preprint',
+		year: 2026,
+		coFirst: true,
+		link: 'https://arxiv.org/abs/2604.20079',
+	},
+	{
+		title: 'Do Language Models Agree with Human Perceptions of Suspense in Stories?',
+		authors: 'G Matlin, D Zhang, RB Loza, DM Popescu, J Isbell, C Chakraborty, et al.',
+		venue: 'Conference on Language Modeling (COLM)',
+		year: 2025,
+		coFirst: false,
+		link: 'https://arxiv.org/abs/2508.15794',
+	},
+	{
+		title: 'Diffusion Model for Generating Inorganic Materials with Targeted Density of States',
+		authors: 'C Chakraborty',
+		venue: 'Georgia Institute of Technology',
+		year: 2025,
+		coFirst: false,
+		link: 'https://repository.gatech.edu/entities/publication/ed62e6cb-43c1-445f-b9a5-5bd4b261ed89',
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Papers | ${SITE_TITLE}`} description="Publications by Chandreyi (Zini) Chakraborty." />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Papers</h1>
+			<p>Research in interpretability, ML systems, and NLP.</p>
+			<ul class="papers">
+				{
+					papers.map((paper) => (
+						<li>
+							<a class="title" href={paper.link} target="_blank" rel="noopener">
+								{paper.title}
+							</a>
+							<span
+								class="authors"
+								set:html={(paper.coFirst
+									? paper.authors
+											.split(', ')
+											.map((name) => `${name}*`)
+											.join(', ')
+									: paper.authors
+								).replace(
+									paper.coFirst ? 'C Chakraborty*' : 'C Chakraborty',
+									`<strong>C Chakraborty${paper.coFirst ? '*' : ''}</strong>`,
+								)}
+							/>
+							<span class="meta">
+								{paper.venue}, {paper.year}
+							</span>
+						</li>
+					))
+				}
+			</ul>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.papers {
+		list-style: none;
+		padding: 0;
+		margin: 2rem 0 0 0;
+	}
+	.papers li {
+		padding: 1.25rem 0;
+		border-bottom: 1px solid rgb(var(--gray-light));
+	}
+	.papers li:last-child {
+		border-bottom: none;
+	}
+	.title {
+		display: block;
+		font-weight: 700;
+		font-size: 1.1rem;
+		color: inherit;
+		text-decoration: none;
+	}
+	.title:hover {
+		color: var(--accent);
+	}
+	.authors {
+		display: block;
+		margin-top: 0.25rem;
+		color: rgb(var(--gray-dark));
+		font-size: 0.95rem;
+	}
+	.meta {
+		display: block;
+		margin-top: 0.25rem;
+		color: rgb(var(--gray));
+		font-size: 0.9rem;
+		font-style: italic;
+	}
+</style>
