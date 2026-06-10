@@ -36,51 +36,112 @@ const experience = [
 		],
 	},
 ];
+
+const education = [
+	{
+		degree: 'M.S. in Computer Science',
+		org: 'Georgia Institute of Technology',
+		location: 'Atlanta, GA',
+		dates: 'August 2025 – May 2026',
+		concentration: 'Machine Learning',
+		option: 'Research Project Option',
+	},
+	{
+		degree: 'B.S. in Computer Science',
+		org: 'Georgia Institute of Technology',
+		location: 'Atlanta, GA',
+		dates: 'August 2022 – May 2025',
+		concentration: 'AI and Networks',
+		option: 'Research Option',
+	},
+];
 ---
 
 <Hero title={`Background | ${SITE_TITLE}`} description="Background of Chandreyi (Zini) Chakraborty.">
 	<h2>Experience</h2>
-	{
-		experience.map((job) => (
-			<section class="job">
-				<div class="job-head">
-					<span class="job-title">{job.title}</span>
-					<span class="job-dates">{job.dates}</span>
-				</div>
-				<div class="job-meta">
-					{job.org} · {job.location}
-				</div>
-				<ul>
-					{job.bullets.map((bullet) => (
-						<li>{bullet}</li>
-					))}
-				</ul>
-			</section>
-		))
-	}
+	<div class="timeline">
+		{
+			experience.map((job) => (
+				<section class="job">
+					<div class="job-head">
+						<span class="job-title">{job.title}</span>
+						<span class="job-dates">{job.dates}</span>
+					</div>
+					<div class="job-meta">
+						<span class="job-org">{job.org}</span> · {job.location}
+					</div>
+					<ul>
+						{job.bullets.map((bullet) => (
+							<li>{bullet}</li>
+						))}
+					</ul>
+				</section>
+			))
+		}
+	</div>
 
 	<h2>Education</h2>
-	<section class="job">
-		<div class="job-head">
-			<span class="job-title">Georgia Institute of Technology</span>
-			<span class="job-dates">August 2022 – May 2026</span>
-		</div>
-		<ul>
-			<li>
-				<strong>M.S. in Computer Science</strong> — Concentration: Machine Learning, Research
-				Project Option (May 2026)
-			</li>
-			<li>
-				<strong>B.S. in Computer Science</strong> — Concentration: AI and Networks, Research Option
-				(May 2025)
-			</li>
-		</ul>
-	</section>
+	<div class="timeline">
+		{
+			education.map((ed) => (
+				<section class="job">
+					<div class="job-head">
+						<span class="job-title">{ed.degree}</span>
+						<span class="job-dates">{ed.dates}</span>
+					</div>
+					<div class="job-meta">
+						<span class="job-org">{ed.org}</span> · {ed.location}
+					</div>
+					<div class="ed-tags">
+						<span class="tag">Concentration: {ed.concentration}</span>
+						<span class="tag">{ed.option}</span>
+					</div>
+				</section>
+			))
+		}
+	</div>
 </Hero>
 
 <style>
+	h2 {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+		font-size: 1.45rem;
+		margin: 2.25rem 0 1.25rem;
+	}
+	h2:first-of-type {
+		margin-top: 0.25rem;
+	}
+	h2::before {
+		content: '';
+		width: 0.45rem;
+		height: 1.3rem;
+		border-radius: 999px;
+		background: hsl(320, 100%, 70%);
+	}
+
+	.timeline {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
 	.job {
-		margin-bottom: 1.75rem;
+		position: relative;
+		padding: 1.2rem 1.4rem;
+		border-radius: 0.9rem;
+		background: color-mix(in srgb, currentColor 5%, transparent);
+		border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+		border-left: 3px solid hsl(220, 100%, 70%);
+		transition:
+			transform 0.18s ease,
+			background 0.18s ease,
+			border-left-color 0.18s ease;
+	}
+	.job:hover {
+		transform: translateX(3px);
+		background: color-mix(in srgb, currentColor 8%, transparent);
+		border-left-color: hsl(320, 100%, 70%);
 	}
 	.job-head {
 		display: flex;
@@ -94,17 +155,48 @@ const experience = [
 		font-size: 1.1rem;
 	}
 	.job-dates {
-		font-size: 0.9rem;
+		font-size: 0.78rem;
 		white-space: nowrap;
+		padding: 0.2rem 0.65rem;
+		border-radius: 999px;
+		background: color-mix(in srgb, currentColor 9%, transparent);
 	}
 	.job-meta {
 		font-size: 0.95rem;
-		margin-top: 0.15rem;
+		margin-top: 0.3rem;
+	}
+	.job-org {
+		color: hsl(220, 100%, 70%);
+		font-weight: 600;
 	}
 	.job ul {
-		margin-top: 0.6rem;
+		margin-top: 0.8rem;
+		padding-left: 1.1rem;
+		list-style: none;
 	}
 	.job li {
-		margin-bottom: 0.3rem;
+		position: relative;
+		margin-bottom: 0.4rem;
+		line-height: 1.5;
+	}
+	.job li::before {
+		content: '▹';
+		position: absolute;
+		left: -1.1rem;
+		color: hsl(320, 100%, 70%);
+	}
+
+	.ed-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 0.85rem;
+	}
+	.tag {
+		font-size: 0.8rem;
+		padding: 0.25rem 0.7rem;
+		border-radius: 999px;
+		background: color-mix(in srgb, currentColor 7%, transparent);
+		border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
 	}
 </style>

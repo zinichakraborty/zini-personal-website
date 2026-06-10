@@ -49,7 +49,9 @@ export default function ShaderBackground() {
 
       <button
         onClick={() => setIsDarkMode(!isDarkMode)}
-        className="fixed right-6 top-3 z-30 rounded-full p-2 text-white transition-colors hover:bg-white/10"
+        className={`fixed right-6 top-3 z-30 rounded-full p-2 transition-colors ${
+          isDarkMode ? "bg-white text-black hover:bg-white/80" : "text-black hover:bg-black/10"
+        }`}
         aria-label="Toggle theme"
       >
         {isDarkMode ? (

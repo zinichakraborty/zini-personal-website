@@ -6,4 +6,34 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 <Hero title={SITE_TITLE} description={SITE_DESCRIPTION} centered>
 	<h2 class="hero-name">Chandreyi (Zini) Chakraborty</h2>
 	<p class="hero-tagline">passionate about interpretable and efficient ai</p>
+	<span slot="below" class="hero-penguin">
+		<img class="penguin-still" src="/penguin-favicon.svg" alt="Penguin" width="256" height="256" />
+		<img class="penguin-wave" src="/penguin-wave.svg" alt="" aria-hidden="true" width="256" height="256" />
+	</span>
 </Hero>
+
+<style>
+	.hero-penguin {
+		position: relative;
+		display: block;
+		width: 256px;
+		height: 256px;
+		margin: 1.5rem 0 0;
+	}
+	.hero-penguin img {
+		display: block;
+		width: 256px;
+		height: 256px;
+	}
+	.hero-penguin .penguin-wave {
+		position: absolute;
+		inset: 0;
+		display: none;
+	}
+	.hero-penguin:hover .penguin-still {
+		display: none;
+	}
+	.hero-penguin:hover .penguin-wave {
+		display: block;
+	}
+</style>

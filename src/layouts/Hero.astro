@@ -54,6 +54,7 @@ const isActive = (href: string) =>
 			<div class:list={['card', { 'card-centered': centered, 'card-wide': wide, 'card-fit': fit }]}>
 				<slot />
 			</div>
+			<slot name="below" />
 		</main>
 
 		<footer class="shader-footer">
