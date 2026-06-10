@@ -168,24 +168,31 @@ body {
 	z-index: 20;
 	display: flex;
 	justify-content: center;
-	gap: 2rem;
-	padding: 1rem 1.5rem;
+	gap: 0.75rem;
+	padding: 1.35rem 1.5rem;
 	background: #000;
 	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-	font-size: 1.125rem;
+	font-size: 1.4rem;
 }
 .shader-nav a {
 	color: hsl(320, 100%, 70%);
 	text-decoration: none;
-	transition: color 0.15s;
+	padding: 0.45rem 1.2rem;
+	border: 1px solid transparent;
+	border-radius: 0.5rem;
+	transition:
+		background 0.15s,
+		border-color 0.15s,
+		color 0.15s;
 }
 .shader-nav a:hover {
 	color: hsl(220, 100%, 70%);
-	text-decoration: underline;
+	border-color: currentColor;
 }
 .shader-nav a.active {
-	text-decoration: underline;
-	text-underline-offset: 4px;
+	background: hsl(320, 100%, 70%);
+	border-color: hsl(320, 100%, 70%);
+	color: #000;
 }
 
 .card-wrap {
@@ -211,14 +218,18 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 1.25rem;
-	padding: 1rem 1.5rem;
+	gap: 1.75rem;
+	padding: 1.5rem 1.5rem;
 	background: #000;
 }
 .shader-footer a {
 	display: inline-flex;
 	color: hsl(320, 100%, 70%);
 	transition: color 0.15s;
+}
+.shader-footer svg {
+	width: 36px;
+	height: 36px;
 }
 .shader-footer a:hover {
 	color: hsl(220, 100%, 70%);
@@ -232,6 +243,17 @@ body {
 	border-radius: 1.5rem;
 	padding: 2.5rem 2.75rem;
 	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+	animation: card-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes card-rise {
+	from {
+		opacity: 0;
+		transform: translateY(12px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 .card-centered {
 	text-align: center;
@@ -314,18 +336,30 @@ body {
 :root[data-theme='light'] .card .authors {
 	color: hsl(220, 100%, 70%);
 }
+:root[data-theme='light'] .shader-nav a.active {
+	background: hsl(220, 100%, 70%);
+	border-color: hsl(220, 100%, 70%);
+	color: #fff;
+}
 
 @media (max-width: 720px) {
 	.shader-nav {
 		justify-content: flex-start;
-		gap: 1rem;
-		font-size: 1rem;
-		padding: 0.75rem 3rem 0.75rem 1rem;
+		gap: 0.75rem;
+		font-size: 1.25rem;
+		padding: 1rem 3rem 1rem 1rem;
 	}
 	.card {
 		padding: 1.5rem 1.25rem;
 	}
 	.card .hero-name {
 		white-space: normal;
+	}
+}
+
+/* Honor the same reduced-motion preference the shader respects. */
+@media (prefers-reduced-motion: reduce) {
+	.card {
+		animation: none;
 	}
 }

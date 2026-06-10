@@ -4,7 +4,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
 <Hero title={SITE_TITLE} description={SITE_DESCRIPTION} centered>
-	<h2 class="hero-name">Chandreyi (Zini) Chakraborty</h2>
+	<h2 class="hero-name">Chandreyi <span class="hero-nick">(Zini)</span> Chakraborty</h2>
 	<p class="hero-tagline">passionate about interpretable and efficient ai</p>
 	<span slot="below" class="hero-penguin">
 		<img class="penguin-still" src="/penguin-favicon.svg" alt="Penguin" width="256" height="256" />
@@ -19,6 +19,36 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		width: 256px;
 		height: 256px;
 		margin: 1.5rem 0 0;
+		animation: penguin-bob 3s ease-in-out infinite;
+	}
+	@keyframes penguin-bob {
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-8px);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.hero-penguin {
+			animation: none;
+		}
+	}
+	.hero-nick {
+		display: inline-block;
+		transition:
+			transform 0.2s ease,
+			color 0.2s ease;
+	}
+	.hero-nick:hover {
+		transform: scale(1.25);
+		color: hsl(220, 100%, 70%);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.hero-nick {
+			transition: color 0.2s ease;
+		}
 	}
 	.hero-penguin img {
 		display: block;
