@@ -284,9 +284,12 @@ body {
 .card .papers li {
 	border-bottom-color: rgba(255, 255, 255, 0.15);
 }
-/* Author names in the papers list (own name is bold within) */
-.card .authors {
+/* Author list stays muted; only the site owner's bolded name is accented. */
+.card .authors strong {
 	color: hsl(320, 100%, 70%);
+}
+.card .title {
+	transition: color 0.18s ease;
 }
 .card .title:hover,
 .card li a:hover :is(h4, .date) {
@@ -333,7 +336,7 @@ body {
 :root[data-theme='light'] .shader-nav a,
 :root[data-theme='light'] .shader-footer a,
 :root[data-theme='light'] .card .hero-name,
-:root[data-theme='light'] .card .authors {
+:root[data-theme='light'] .card .authors strong {
 	color: hsl(220, 100%, 70%);
 }
 :root[data-theme='light'] .shader-nav a.active {
@@ -354,6 +357,55 @@ body {
 	}
 	.card .hero-name {
 		white-space: normal;
+	}
+}
+
+/* Smooth underline-grow on inline card links (news org + [link]). */
+.card :is(a.org, .item-link) {
+	background-image: linear-gradient(currentColor, currentColor);
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	background-size: 0% 1.5px;
+	transition:
+		background-size 0.25s ease,
+		color 0.18s ease;
+}
+.card :is(a.org, .item-link):hover {
+	background-size: 100% 1.5px;
+}
+
+/* Staggered entrance for content list rows (papers, news, experience). */
+@media (prefers-reduced-motion: no-preference) {
+	.card :is(.paper, .item, .job) {
+		animation: list-reveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+	}
+	.card :is(.paper, .item, .job):nth-child(1) {
+		animation-delay: 0.1s;
+	}
+	.card :is(.paper, .item, .job):nth-child(2) {
+		animation-delay: 0.17s;
+	}
+	.card :is(.paper, .item, .job):nth-child(3) {
+		animation-delay: 0.24s;
+	}
+	.card :is(.paper, .item, .job):nth-child(4) {
+		animation-delay: 0.31s;
+	}
+	.card :is(.paper, .item, .job):nth-child(5) {
+		animation-delay: 0.38s;
+	}
+	.card :is(.paper, .item, .job):nth-child(6) {
+		animation-delay: 0.45s;
+	}
+}
+@keyframes list-reveal {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
 	}
 }
 
