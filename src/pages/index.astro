@@ -1,18 +1,309 @@
 ---
 import Hero from '../layouts/Hero.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+// === Background ===
+const experience = [
+	{
+		title: 'Software Engineer Intern',
+		org: 'Bloomberg',
+		location: 'New York, NY',
+		dates: 'June 2025 – August 2025',
+		bullets: [
+			'Built first-of-its-kind, full-stack C++ app for transparent portfolio aggregations via the Bloomberg Terminal',
+			'Reduced runtime from tens of minutes to seconds with a lightweight, parallelized backend service and UI',
+			'Coordinated with cross-team developers to integrate Splunk API trace calls, diagnosing client-reported issues',
+		],
+	},
+	{
+		title: 'Machine Learning Teaching Assistant',
+		org: 'Georgia Institute of Technology',
+		location: 'Atlanta, GA',
+		dates: 'August 2024 – May 2026',
+		bullets: [
+			'Building retrieval-augmented fine-tuned EdStem LLM agent with dynamic databases for Socratic Q&A',
+			'Automate assignment grading through code image detection, instruct students in project design and office hours',
+		],
+	},
+	{
+		title: 'Solutions Engineering Intern',
+		org: 'Deloitte Consulting',
+		location: 'Nashville, TN',
+		dates: 'June 2024 – July 2024',
+		bullets: [
+			'Handle end-to-end production in State of Tennessee Eligibility Benefits Management System Portals in Java Spring',
+			'Discuss with clients on defects and enhancements, actualize SummerEBT Appeals, 600K+ eligible yearly',
+			'Develop DevOps Python automation to restart failing JVMs and Streamlit LLM tool to recommend course paths',
+		],
+	},
+];
+
+const education = [
+	{
+		degree: 'M.S. in Computer Science',
+		org: 'Georgia Institute of Technology',
+		location: 'Atlanta, GA',
+		dates: 'August 2025 – May 2026',
+		concentration: 'Machine Learning',
+		option: 'Research Project Option',
+	},
+	{
+		degree: 'B.S. in Computer Science',
+		org: 'Georgia Institute of Technology',
+		location: 'Atlanta, GA',
+		dates: 'August 2022 – May 2025',
+		concentration: 'AI and Networks',
+		option: 'Research Option',
+	},
+];
+
+// === Papers === (pulled from Google Scholar; update as new papers come out)
+const papers = [
+	{
+		title: 'On the Quantization Robustness of Diffusion Language Models in Coding Benchmarks',
+		authors: 'A Gupta, G Deshpande, C Chakraborty',
+		venue: 'arXiv preprint',
+		year: 2026,
+		coFirst: true,
+		link: 'https://arxiv.org/abs/2604.20079',
+	},
+	{
+		title: 'Do Language Models Agree with Human Perceptions of Suspense in Stories?',
+		authors: 'G Matlin, D Zhang, RB Loza, DM Popescu, J Isbell, C Chakraborty, et al.',
+		venue: 'Conference on Language Modeling (COLM)',
+		year: 2025,
+		coFirst: false,
+		link: 'https://arxiv.org/abs/2508.15794',
+	},
+	{
+		title: 'Diffusion Model for Generating Inorganic Materials with Targeted Density of States',
+		authors: 'C Chakraborty',
+		venue: 'Georgia Institute of Technology',
+		year: 2025,
+		coFirst: false,
+		link: 'https://repository.gatech.edu/entities/publication/ed62e6cb-43c1-445f-b9a5-5bd4b261ed89',
+	},
+];
+
+// Mark co-first authors with * and bold the site owner's name.
+const formatAuthors = (paper) => {
+	const names = paper.coFirst
+		? paper.authors
+				.split(', ')
+				.map((name) => (name === 'et al.' ? name : `${name}*`))
+				.join(', ')
+		: paper.authors;
+	return names.replace(
+		paper.coFirst ? 'C Chakraborty*' : 'C Chakraborty',
+		`<strong>C Chakraborty${paper.coFirst ? '*' : ''}</strong>`,
+	);
+};
+
+// === News === (recent updates; add new entries to the top)
+const news = [
+	{
+		date: 'Jun 2026',
+		org: 'Allen Institute for AI (AI2)',
+		role: 'Invited Interview',
+		orgLink: 'https://allenai.org',
+		body: 'Invited to interview to advance research on social reasoning data attribution in OLMo 3, AI2’s fully open frontier language model.',
+	},
+	{
+		date: 'Jan 2026',
+		org: 'EleutherAI',
+		role: 'Research Collaborator',
+		orgLink: 'https://www.eleuther.ai',
+		body: 'Partnered with the team behind Bergson to extend their gradient-based attribution methods to social reasoning, tracing model behavior back to its training data.',
+	},
+	{
+		date: 'Jan 2024',
+		org: 'Bits of Good',
+		role: 'Full-Stack Developer',
+		orgLink: 'https://bitsofgood.org',
+		body: 'Co-developed a full-stack web platform for Heart of Passion, an Atlanta non-profit serving youth cancer patients, streamlining donations and event coordination for the organization.',
+		link: 'https://github.com/GTBitsOfGood/heart-of-passion',
+	},
+	{
+		date: 'Sep 2021',
+		org: 'Girl Scouts STEM Center',
+		role: 'Workshop Instructor',
+		orgLink: 'https://www.girlscoutshcc.org',
+		body: 'Designed and led free, hands-on workshops introducing young Girl Scouts to Artificial Intelligence, demystifying the field and inspiring the next generation of women in STEM.',
+	},
+	{
+		date: 'Jul 2021',
+		org: 'UCSB Research Mentorship Program',
+		role: 'Student Researcher',
+		orgLink: 'https://www.summer.ucsb.edu/programs/research-mentorship-program/overview',
+		body: 'Presented original mathematics research to an audience of 100+, collaborating with PhD candidate Andres Barei on a method to determine whether a given algebra is standardly stratified.',
+	},
+	{
+		date: 'Jul 2020',
+		org: 'UCSB Summer Research Academies',
+		role: 'Student Researcher',
+		orgLink: 'https://www.summer.ucsb.edu/programs/summer-research-academies/overview',
+		body: 'Presented at a research seminar to 100+ attendees on a Siamese neural network that jointly predicts the driveability and terrain of car-view landscapes for autonomous navigation.',
+		link: 'https://github.com/zinichakraborty/Using-Deep-Learning-to-Analyze-the-Driveability-of-Autonomous-Vehicles-on-Unmarked-Terrain',
+	},
+];
 ---
 
-<Hero title={SITE_TITLE} description={SITE_DESCRIPTION} centered>
-	<h2 class="hero-name">Chandreyi <span class="hero-nick">(Zini)</span> Chakraborty</h2>
-	<p class="hero-tagline">passionate about interpretable and efficient ai</p>
-	<span slot="below" class="hero-penguin">
-		<img class="penguin-still" src="/penguin-favicon.svg" alt="Penguin" width="256" height="256" />
-		<img class="penguin-wave" src="/penguin-wave.svg" alt="" aria-hidden="true" width="256" height="256" />
-	</span>
+<Hero title={SITE_TITLE} description={SITE_DESCRIPTION} bare>
+	<section id="home" class="card section section-home">
+		<h2 class="hero-name">Chandreyi <span class="hero-nick">(Zini)</span> Chakraborty</h2>
+		<p class="hero-tagline">passionate about interpretable and efficient ai</p>
+		<p class="hero-bio">
+			I'm a Software Engineer at Affirm optimizing the developer and machine learning platform
+			infrastructure. I graduated from my BSCS and MSCS at Georgia Tech and I continue to research
+			how language models reason.
+		</p>
+		<span class="hero-penguin">
+			<img class="penguin-still" src="/penguin-favicon.svg" alt="Penguin" width="256" height="256" />
+			<img
+				class="penguin-wave"
+				src="/penguin-wave.svg"
+				alt=""
+				aria-hidden="true"
+				width="256"
+				height="256"
+			/>
+		</span>
+	</section>
+
+	<section id="education" class="card section">
+		<h2 class="section-title">Education</h2>
+		<div class="timeline">
+			{
+				education.map((ed) => (
+					<section class="job">
+						<div class="job-head">
+							<span class="job-title">{ed.degree}</span>
+							<span class="job-dates">{ed.dates}</span>
+						</div>
+						<div class="job-meta">
+							<span class="job-org">{ed.org}</span> · {ed.location}
+						</div>
+						<div class="ed-detail">
+							{ed.concentration} · {ed.option}
+						</div>
+					</section>
+				))
+			}
+		</div>
+	</section>
+
+	<section id="experience" class="card section">
+		<h2 class="section-title">Experience</h2>
+		<div class="timeline">
+			{
+				experience.map((job) => (
+					<section class="job">
+						<div class="job-head">
+							<span class="job-title">{job.title}</span>
+							<span class="job-dates">{job.dates}</span>
+						</div>
+						<div class="job-meta">
+							<span class="job-org">{job.org}</span> · {job.location}
+						</div>
+						<ul>
+							{job.bullets.map((bullet) => (
+								<li>{bullet}</li>
+							))}
+						</ul>
+					</section>
+				))
+			}
+		</div>
+	</section>
+
+	<section id="papers" class="card section">
+		<h2 class="section-title">Papers</h2>
+		<ol class="papers">
+			{
+				papers.map((paper) => (
+					<li class="paper">
+						<span class="year">{paper.year}</span>
+						<div class="content">
+							<a class="title" href={paper.link} target="_blank" rel="noopener">
+								{paper.title}
+							</a>
+							<span class="authors" set:html={formatAuthors(paper)} />
+							<span class="venue">
+								<em>{paper.venue}</em>
+								{paper.coFirst && <span class="cofirst"> (* Equal contribution)</span>}
+							</span>
+						</div>
+					</li>
+				))
+			}
+		</ol>
+	</section>
+
+	<section id="news" class="card section">
+		<h2 class="section-title">News</h2>
+		<ul class="news">
+			{
+				news.map((item) => (
+					<li class="item">
+						<span class="date">{item.date}</span>
+						<div class="content">
+							<div class="org-row">
+								{item.orgLink ? (
+									<a class="org" href={item.orgLink} target="_blank" rel="noopener">
+										{item.org}
+									</a>
+								) : (
+									<span class="org">{item.org}</span>
+								)}
+								{item.role && <span class="role">{item.role}</span>}
+							</div>
+							<p class="body">{item.body}</p>
+							{item.link && (
+								<a class="item-link" href={item.link} target="_blank" rel="noopener">
+									View on GitHub
+								</a>
+							)}
+						</div>
+					</li>
+				))
+			}
+		</ul>
+	</section>
 </Hero>
 
 <style>
+	/* === Section headings (pink-bar accent) === */
+	.section-title {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+		font-size: 1.65rem;
+		margin: 2.25rem 0 1.25rem;
+	}
+	.section-title:first-of-type {
+		margin-top: 0.25rem;
+	}
+	.section-title::before {
+		content: '';
+		width: 0.45rem;
+		height: 1.5rem;
+		border-radius: 999px;
+		background: hsl(320, 100%, 70%);
+	}
+
+	/* === Home hero === */
+	/* Offset by the fixed sidebar would clip the no-wrap name; let it wrap instead. */
+	.section-home .hero-name {
+		white-space: normal;
+		max-width: 100%;
+	}
+	.hero-bio {
+		max-width: 34rem;
+		margin: 0.75rem auto 0;
+		font-size: 0.95rem;
+		line-height: 1.6;
+		opacity: 0.75;
+	}
 	.hero-penguin {
 		position: relative;
 		display: block;
@@ -30,11 +321,6 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			transform: translateY(-8px);
 		}
 	}
-	@media (prefers-reduced-motion: reduce) {
-		.hero-penguin {
-			animation: none;
-		}
-	}
 	.hero-nick {
 		display: inline-block;
 		transition:
@@ -44,11 +330,6 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	.hero-nick:hover {
 		transform: scale(1.25);
 		color: hsl(220, 100%, 70%);
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.hero-nick {
-			transition: color 0.2s ease;
-		}
 	}
 	.hero-penguin img {
 		display: block;
@@ -65,5 +346,199 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	}
 	.hero-penguin:hover .penguin-wave {
 		display: block;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.hero-penguin {
+			animation: none;
+		}
+		.hero-nick {
+			transition: color 0.2s ease;
+		}
+	}
+
+	/* === Background: experience + education === */
+	.job {
+		padding: 1rem 0;
+		border-top: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+	}
+	.job:last-child {
+		border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+	}
+	.job-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+	.job-title {
+		font-weight: 700;
+		font-size: 1.05rem;
+	}
+	.job-dates {
+		font-size: 0.82rem;
+		white-space: nowrap;
+		opacity: 0.6;
+		font-variant-numeric: tabular-nums;
+	}
+	.job-meta {
+		font-size: 0.92rem;
+		margin-top: 0.25rem;
+	}
+	.job-org {
+		color: hsl(220, 100%, 72%);
+		font-weight: 600;
+	}
+	.job ul {
+		margin-top: 0.65rem;
+		padding-left: 1.1rem;
+		list-style: none;
+	}
+	.job li {
+		position: relative;
+		margin-bottom: 0.35rem;
+		line-height: 1.55;
+		font-size: 0.95rem;
+	}
+	.job li::before {
+		content: '▹';
+		position: absolute;
+		left: -1.1rem;
+		color: hsl(320, 100%, 70%);
+	}
+	.ed-detail {
+		margin-top: 0.4rem;
+		font-size: 0.9rem;
+		font-style: italic;
+		opacity: 0.75;
+	}
+
+	/* === Papers === */
+	.intro {
+		margin: 0.25rem 0 0 0;
+		opacity: 0.75;
+	}
+	.papers {
+		list-style: none;
+		padding: 0;
+		margin: 1.25rem 0 0 0;
+	}
+	.paper {
+		display: grid;
+		grid-template-columns: 3.5rem 1fr;
+		gap: 1.25rem;
+		padding: 1rem 0;
+		border-top: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+	}
+	.paper:last-child {
+		border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+	}
+	.year {
+		font-size: 0.85rem;
+		font-variant-numeric: tabular-nums;
+		opacity: 0.6;
+		padding-top: 0.2rem;
+		white-space: nowrap;
+	}
+	.content {
+		min-width: 0;
+	}
+	.title {
+		display: block;
+		font-weight: 700;
+		font-size: 1.05rem;
+		line-height: 1.4;
+		color: hsl(220, 100%, 72%);
+		text-decoration: none;
+	}
+	.authors {
+		display: block;
+		margin-top: 0.35rem;
+		font-size: 0.92rem;
+		line-height: 1.5;
+	}
+	.venue {
+		display: block;
+		margin-top: 0.2rem;
+		font-size: 0.88rem;
+		opacity: 0.7;
+	}
+	.cofirst {
+		font-size: 0.8rem;
+	}
+
+	/* === News === */
+	.news {
+		list-style: none;
+		padding: 0;
+		margin: 1.25rem 0 0 0;
+	}
+	.item {
+		display: grid;
+		grid-template-columns: 6.5rem 1fr;
+		gap: 1.25rem;
+		padding: 0.9rem 0;
+		border-top: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+	}
+	.item:last-child {
+		border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+	}
+	.date {
+		font-size: 0.85rem;
+		font-variant-numeric: tabular-nums;
+		padding-top: 0.1rem;
+		opacity: 0.65;
+		white-space: nowrap;
+	}
+	.org-row {
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem;
+	}
+	.org {
+		font-weight: 700;
+		font-size: 1.05rem;
+		color: hsl(220, 100%, 72%);
+		text-decoration: none;
+	}
+	.role {
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+		opacity: 0.7;
+		padding: 0.1rem 0.5rem;
+		border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+		border-radius: 999px;
+		white-space: nowrap;
+	}
+	.body {
+		margin: 0.3rem 0 0 0;
+		line-height: 1.55;
+	}
+	.item-link {
+		display: inline-flex;
+		align-items: center;
+		margin-top: 0.5rem;
+		font-size: 0.8rem;
+		color: hsl(220, 100%, 72%);
+		text-decoration: none;
+		font-weight: 600;
+		white-space: nowrap;
+	}
+	.item-link:hover {
+		text-decoration: underline;
+	}
+
+	@media (max-width: 32rem) {
+		.paper,
+		.item {
+			grid-template-columns: 1fr;
+			gap: 0.3rem;
+		}
+		.year,
+		.date {
+			padding-top: 0;
+		}
 	}
 </style>

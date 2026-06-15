@@ -12,20 +12,20 @@ interface Props {
 	wide?: boolean;
 	/** Shrink the card to fit its widest line of content. */
 	fit?: boolean;
+	/** Single-page mode: render the slot directly (sections supply their own cards). */
+	bare?: boolean;
 }
 
-const { title, description, centered = false, wide = false, fit = false } = Astro.props;
+const { title, description, centered = false, wide = false, fit = false, bare = false } = Astro.props;
 
+// Each tab points at a section anchor on the single home page.
 const nav = [
-	{ label: 'Home', href: '/' },
-	{ label: 'Background', href: '/background' },
-	{ label: 'Papers', href: '/papers' },
-	{ label: 'News', href: '/news' },
+	{ label: 'Home', id: 'home' },
+	{ label: 'Education', id: 'education' },
+	{ label: 'Experience', id: 'experience' },
+	{ label: 'Papers', id: 'papers' },
+	{ label: 'News', id: 'news' },
 ];
-
-const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
-const isActive = (href: string) =>
-	href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
 ---
 
 <!doctype html>
@@ -39,23 +39,29 @@ const isActive = (href: string) =>
 		<nav class="shader-nav">
 			{
 				nav.map((item) => (
-					<a
-						href={item.href}
-						class={isActive(item.href) ? 'active' : undefined}
-						aria-current={isActive(item.href) ? 'page' : undefined}
-					>
+					<a href={`/#${item.id}`} data-nav={item.id}>
 						{item.label}
 					</a>
 				))
 			}
 		</nav>
 
-		<main class:list={['card-wrap', { center: centered }]}>
-			<div class:list={['card', { 'card-centered': centered, 'card-wide': wide, 'card-fit': fit }]}>
-				<slot />
-			</div>
-			<slot name="below" />
-		</main>
+		{
+			bare ? (
+				<main class="card-wrap page-stack">
+					<slot />
+				</main>
+			) : (
+				<main class:list={['card-wrap', { center: centered }]}>
+					<div
+						class:list={['card', { 'card-centered': centered, 'card-wide': wide, 'card-fit': fit }]}
+					>
+						<slot />
+					</div>
+					<slot name="below" />
+				</main>
+			)
+		}
 
 		<footer class="shader-footer">
 			<a href={SOCIALS.github} target="_blank" rel="noopener noreferrer">
@@ -109,5 +115,41 @@ const isActive = (href: string) =>
 				>
 			</a>
 		</footer>
+
+		<script>
+			// Highlight the nav tab for whichever section is centered in the viewport.
+			const links = Array.from(
+				document.querySelectorAll<HTMLAnchorElement>('.shader-nav a[data-nav]'),
+			);
+			const byId = new Map(links.map((l) => [l.dataset.nav, l]));
+			const sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
+
+			if (sections.length) {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								links.forEach((l) => l.classList.remove('active'));
+								byId.get(entry.target.id)?.classList.add('active');
+							}
+						});
+					},
+					{ rootMargin: '-45% 0px -45% 0px', threshold: 0 },
+				);
+				sections.forEach((section) => observer.observe(section));
+
+				// Slide sections in/out as they enter and leave the viewport.
+				sections.forEach((section) => section.classList.add('reveal'));
+				const revealObserver = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							entry.target.classList.toggle('in-view', entry.isIntersecting);
+						});
+					},
+					{ threshold: 0.15 },
+				);
+				sections.forEach((section) => revealObserver.observe(section));
+			}
+		</script>
 	</body>
 </html>

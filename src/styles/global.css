@@ -34,7 +34,7 @@ body {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
-	font-size: 20px;
+	font-size: 22px;
 	line-height: 1.7;
 }
 main {
@@ -123,7 +123,7 @@ hr {
 }
 @media (max-width: 720px) {
 	body {
-		font-size: 18px;
+		font-size: 20px;
 	}
 	main {
 		padding: 1em;
@@ -158,21 +158,32 @@ body {
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+	overflow-x: hidden;
+}
+html {
+	overflow-x: hidden;
+	font-size: 18px;
 }
 
 .shader-nav {
 	position: fixed;
 	top: 0;
 	left: 0;
-	right: 0;
+	bottom: 0;
 	z-index: 20;
+	box-sizing: border-box;
+	width: 13rem;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
-	gap: 0.75rem;
-	padding: 1rem;
-	background: #000;
+	gap: 0.5rem;
+	padding: 1.5rem 1.25rem;
+	background: rgba(0, 0, 0, 0.55);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	border-right: 1px solid rgba(255, 255, 255, 0.12);
 	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-	font-size: 1.4rem;
+	font-size: 1.15rem;
 }
 .shader-nav a {
 	color: hsl(320, 100%, 70%);
@@ -198,6 +209,7 @@ body {
 .card-wrap {
 	position: relative;
 	z-index: 10;
+	box-sizing: border-box;
 	flex: 1 0 auto;
 	width: 100%;
 	max-width: none;
@@ -205,11 +217,25 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: flex-start;
-	padding: 7rem 0 1.5rem;
+	padding: 3rem 1.5rem 1.5rem;
+	padding-left: 14.5rem;
 }
 .card-wrap.center {
 	flex-direction: column;
 	align-items: center;
+}
+/* Single-page mode: stack section cards centered in the space that stays at
+   least 20rem clear of the left edge (which also clears the nav). */
+.card-wrap.page-stack {
+	flex-direction: column;
+	align-items: center;
+	gap: 1.75rem;
+	padding-left: 20rem;
+}
+.card-wrap.page-stack .card {
+	width: 100%;
+	min-width: 0;
+	max-width: 56rem;
 }
 
 .shader-footer {
@@ -236,6 +262,7 @@ body {
 }
 
 .card {
+	box-sizing: border-box;
 	width: 94vw;
 	max-width: 1100px;
 	background: #000;
@@ -266,6 +293,29 @@ body {
 .card-fit {
 	width: fit-content;
 	max-width: 94vw;
+}
+
+/* Single-page section cards + smooth anchor scrolling. */
+html {
+	scroll-behavior: smooth;
+}
+.card.section {
+	scroll-margin-top: 2rem;
+}
+.section-home {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
+	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
 }
 
 /* Light text + accent links inside the card */
@@ -301,7 +351,7 @@ body {
 	color: hsl(320, 100%, 70%);
 	white-space: nowrap;
 	text-transform: uppercase;
-	font-size: clamp(2rem, 6vw, 4rem);
+	font-size: clamp(1.6rem, 4.5vw, 3.25rem);
 	font-weight: 400;
 	line-height: 1.1;
 	margin-bottom: 1rem;
@@ -314,9 +364,12 @@ body {
 :root[data-theme='light'] body {
 	background: #fff;
 }
-:root[data-theme='light'] .shader-nav,
 :root[data-theme='light'] .shader-footer {
 	background: #fff;
+}
+:root[data-theme='light'] .shader-nav {
+	background: rgba(255, 255, 255, 0.75);
+	border-right-color: rgba(0, 0, 0, 0.12);
 }
 :root[data-theme='light'] .card {
 	background: #fff;
@@ -347,10 +400,20 @@ body {
 
 @media (max-width: 720px) {
 	.shader-nav {
+		flex-direction: row;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: auto;
 		justify-content: flex-start;
-		gap: 0.75rem;
-		font-size: 1.25rem;
-		padding: 1rem 3rem 1rem 1rem;
+		overflow-x: auto;
+		gap: 0.5rem;
+		background: #000;
+		font-size: 1.05rem;
+		padding: 0.75rem 1rem;
+	}
+	.card-wrap {
+		padding: 5rem 1rem 1.5rem;
 	}
 	.card {
 		padding: 1.5rem 1.25rem;
@@ -413,5 +476,21 @@ body {
 @media (prefers-reduced-motion: reduce) {
 	.card {
 		animation: none;
+	}
+}
+
+/* Slide section cards in/out as they scroll into and out of view. */
+@media (prefers-reduced-motion: no-preference) {
+	.card.section.reveal {
+		animation: none;
+		opacity: 0;
+		transform: translateY(48px);
+		transition:
+			opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+			transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+	.card.section.reveal.in-view {
+		opacity: 1;
+		transform: translateY(0);
 	}
 }
