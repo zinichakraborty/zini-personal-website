@@ -1,6 +1,6 @@
 ---
 import Hero from '../layouts/Hero.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE, SOCIALS } from '../consts';
 
 // === Background ===
 const experience = [
@@ -151,11 +151,12 @@ const news = [
 <Hero title={SITE_TITLE} description={SITE_DESCRIPTION} bare>
 	<section id="home" class="card section section-home">
 		<h2 class="hero-name">Chandreyi <span class="hero-nick">(Zini)</span> Chakraborty</h2>
-		<p class="hero-tagline">passionate about interpretable and efficient ai</p>
-		<p class="hero-bio">
+		<p class="hero-tagline">
 			I'm a Software Engineer at Affirm optimizing the developer and machine learning platform
-			infrastructure. I graduated from my BSCS and MSCS at Georgia Tech and I continue to research
-			how language models reason.
+			infrastructure. I graduated from my BSCS and MSCS at Georgia Tech and I continue to
+			<a href={SOCIALS.scholar} target="_blank" rel="noopener noreferrer"
+				>research how language models reason</a
+			>.
 		</p>
 		<span class="hero-penguin">
 			<img class="penguin-still" src="/penguin-favicon.svg" alt="Penguin" width="256" height="256" />
@@ -304,11 +305,21 @@ const news = [
 		line-height: 1.6;
 		opacity: 0.75;
 	}
+	.hero-tagline a {
+		color: hsl(220, 100%, 70%);
+		text-decoration: none;
+	}
+	.hero-tagline a:hover,
+	.hero-tagline a:focus-visible {
+		color: hsl(320, 100%, 70%);
+		text-decoration: underline;
+	}
 	.hero-penguin {
 		position: relative;
 		display: block;
-		width: 256px;
-		height: 256px;
+		width: min(256px, 55vw);
+		height: auto;
+		aspect-ratio: 1 / 1;
 		margin: 1.5rem 0 0;
 		animation: penguin-bob 3s ease-in-out infinite;
 	}
@@ -333,8 +344,8 @@ const news = [
 	}
 	.hero-penguin img {
 		display: block;
-		width: 256px;
-		height: 256px;
+		width: 100%;
+		height: auto;
 	}
 	.hero-penguin .penguin-wave {
 		position: absolute;
@@ -450,6 +461,10 @@ const news = [
 		line-height: 1.4;
 		color: hsl(220, 100%, 72%);
 		text-decoration: none;
+	}
+	.title:hover,
+	.title:focus-visible {
+		text-decoration: underline;
 	}
 	.authors {
 		display: block;

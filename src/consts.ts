@@ -2,7 +2,7 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 export const SITE_TITLE = 'Zini Chakraborty';
-export const SITE_DESCRIPTION = 'Personal site of Chandreyi (Zini) Chakraborty — research, writing, and a bit about me.';
+export const SITE_DESCRIPTION = 'Personal site of Chandreyi (Zini) Chakraborty.';
 
 // TODO: fill these in. They power the header/footer links and contact.
 export const SOCIALS = {
