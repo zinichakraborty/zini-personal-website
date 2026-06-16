@@ -231,7 +231,7 @@ html {
 	flex-direction: column;
 	align-items: center;
 	gap: 1.75rem;
-	padding-left: 10rem;
+	padding-left: 14rem;
 }
 .card-wrap.page-stack .card {
 	width: 100%;
