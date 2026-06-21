@@ -60,6 +60,14 @@ const education = [
 // === Papers === (pulled from Google Scholar; update as new papers come out)
 const papers = [
 	{
+		title: 'Where Does Social Reasoning Come From? Capability Provenance in Language Models',
+		authors: 'G Matlin, C Chakraborty, S Eom, M Okamoto, R Castilla, et al.',
+		venue: 'arXiv preprint',
+		year: 2026,
+		coFirst: false,
+		link: 'https://arxiv.org/abs/2606.19625',
+	},
+	{
 		title: 'On the Quantization Robustness of Diffusion Language Models in Coding Benchmarks',
 		authors: 'A Gupta, G Deshpande, C Chakraborty',
 		venue: 'arXiv preprint',
@@ -116,12 +124,26 @@ const news = [
 		body: 'Partnered with the team behind Bergson to extend their gradient-based attribution methods to social reasoning, tracing model behavior back to its training data.',
 	},
 	{
+		date: 'Jan 2025',
+		org: 'Entertainment Intelligence Lab',
+		role: 'Researcher',
+		orgLink: 'https://eilab.gatech.edu/mark-riedl.html',
+		body: 'Joined Mark Riedl’s lab at Georgia Tech to research human-centered AI, exploring how large language models reason and explain their behavior.',
+	},
+	{
 		date: 'Jan 2024',
 		org: 'Bits of Good',
 		role: 'Full-Stack Developer',
 		orgLink: 'https://bitsofgood.org',
 		body: 'Co-developed a full-stack web platform for Heart of Passion, an Atlanta non-profit serving youth cancer patients, streamlining donations and event coordination for the organization.',
 		link: 'https://github.com/GTBitsOfGood/heart-of-passion',
+	},
+	{
+		date: 'Aug 2023',
+		org: 'Fung Group',
+		role: 'Researcher',
+		orgLink: 'https://www.fung-group.org/',
+		body: 'Joined Victor Fung’s group at Georgia Tech, applying machine learning to accelerate materials discovery and design.',
 	},
 	{
 		date: 'Sep 2021',
@@ -133,14 +155,14 @@ const news = [
 	{
 		date: 'Jul 2021',
 		org: 'UCSB Research Mentorship Program',
-		role: 'Student Researcher',
+		role: 'Researcher',
 		orgLink: 'https://www.summer.ucsb.edu/programs/research-mentorship-program/overview',
 		body: 'Presented original mathematics research to an audience of 100+, collaborating with PhD candidate Andres Barei on a method to determine whether a given algebra is standardly stratified.',
 	},
 	{
 		date: 'Jul 2020',
 		org: 'UCSB Summer Research Academies',
-		role: 'Student Researcher',
+		role: 'Researcher',
 		orgLink: 'https://www.summer.ucsb.edu/programs/summer-research-academies/overview',
 		body: 'Presented at a research seminar to 100+ attendees on a Siamese neural network that jointly predicts the driveability and terrain of car-view landscapes for autonomous navigation.',
 		link: 'https://github.com/zinichakraborty/Using-Deep-Learning-to-Analyze-the-Driveability-of-Autonomous-Vehicles-on-Unmarked-Terrain',
@@ -231,7 +253,7 @@ const news = [
 							<span class="authors" set:html={formatAuthors(paper)} />
 							<span class="venue">
 								<em>{paper.venue}</em>
-								{paper.coFirst && <span class="cofirst"> (* Equal contribution)</span>}
+								{paper.coFirst && <span class="cofirst">*Equal contribution</span>}
 							</span>
 						</div>
 					</li>
@@ -479,7 +501,16 @@ const news = [
 		opacity: 0.7;
 	}
 	.cofirst {
-		font-size: 0.8rem;
+		display: inline-block;
+		margin-left: 0.5rem;
+		padding: 0.05rem 0.45rem;
+		border-radius: 999px;
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		color: hsl(220, 100%, 78%);
+		background: color-mix(in srgb, hsl(220, 100%, 72%) 16%, transparent);
+		opacity: 1;
 	}
 
 	/* === News === */
