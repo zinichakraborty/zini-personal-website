@@ -45,14 +45,14 @@ const education = [
 		location: 'Atlanta, GA',
 		dates: 'August 2025 – May 2026',
 		concentration: 'Machine Learning',
-		option: 'Research Project Option',
+		option: 'Research Option',
 	},
 	{
 		degree: 'B.S. in Computer Science',
 		org: 'Georgia Institute of Technology',
 		location: 'Atlanta, GA',
 		dates: 'August 2022 – May 2025',
-		concentration: 'AI and Networks',
+		concentration: 'Artificial Intelligence + Computer Networking',
 		option: 'Research Option',
 	},
 ];
@@ -204,10 +204,12 @@ const news = [
 							<span class="job-dates">{ed.dates}</span>
 						</div>
 						<div class="job-meta">
-							<span class="job-org">{ed.org}</span> · {ed.location}
+							<span class="job-org">{ed.org}</span>
+							<span class="job-loc">{ed.location}</span>
 						</div>
 						<div class="ed-detail">
-							{ed.concentration} · {ed.option}
+							<span class="ed-tag">{ed.concentration}</span>
+							<span class="ed-tag ed-tag--option">{ed.option}</span>
 						</div>
 					</section>
 				))
@@ -226,7 +228,8 @@ const news = [
 							<span class="job-dates">{job.dates}</span>
 						</div>
 						<div class="job-meta">
-							<span class="job-org">{job.org}</span> · {job.location}
+							<span class="job-org">{job.org}</span>
+							<span class="job-loc">{job.location}</span>
 						</div>
 						<ul>
 							{job.bullets.map((bullet) => (
@@ -417,10 +420,20 @@ const news = [
 	.job-meta {
 		font-size: 0.92rem;
 		margin-top: 0.25rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+		flex-wrap: wrap;
 	}
 	.job-org {
 		color: hsl(220, 100%, 72%);
 		font-weight: 600;
+	}
+	.job-loc {
+		font-size: 0.85rem;
+		white-space: nowrap;
+		opacity: 0.65;
 	}
 	.job ul {
 		margin-top: 0.65rem;
@@ -440,10 +453,25 @@ const news = [
 		color: hsl(320, 100%, 70%);
 	}
 	.ed-detail {
-		margin-top: 0.4rem;
-		font-size: 0.9rem;
-		font-style: italic;
-		opacity: 0.75;
+		margin-top: 0.55rem;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+	.ed-tag {
+		font-size: 0.78rem;
+		font-weight: 500;
+		letter-spacing: 0.01em;
+		padding: 0.18rem 0.6rem;
+		border-radius: 999px;
+		color: hsl(220, 100%, 80%);
+		background: color-mix(in srgb, hsl(220, 100%, 72%) 12%, transparent);
+		border: 1px solid color-mix(in srgb, hsl(220, 100%, 72%) 28%, transparent);
+	}
+	.ed-tag--option {
+		color: hsl(320, 100%, 82%);
+		background: color-mix(in srgb, hsl(320, 100%, 70%) 12%, transparent);
+		border-color: color-mix(in srgb, hsl(320, 100%, 70%) 28%, transparent);
 	}
 
 	/* === Papers === */
