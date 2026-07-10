@@ -25,7 +25,7 @@
 		0 16px 32px rgba(var(--gray), 33%);
 }
 body {
-	font-family: var(--font-atkinson);
+	font-family: var(--font-roboto);
 	margin: 0;
 	padding: 0;
 	text-align: left;
@@ -160,6 +160,12 @@ hr {
 	   headings/links a touch above it for hierarchy. */
 	--ink: rgba(255, 255, 255, 0.87);
 	--ink-strong: rgba(255, 255, 255, 0.96);
+	--link: hsl(320, 100%, 78%);
+	--link-hover: hsl(320, 100%, 88%);
+}
+:root[data-theme='light'] {
+	--link: hsl(220, 100%, 70%);
+	--link-hover: hsl(220, 100%, 55%);
 }
 body {
 	background: var(--magenta);
@@ -212,7 +218,7 @@ html {
 }
 
 .shader-footer {
-	position: fixed;
+	position: absolute;
 	top: 1.25rem;
 	right: 1.5rem;
 	z-index: 20;
@@ -290,10 +296,10 @@ html {
 	color: var(--ink-strong);
 }
 .card a {
-	color: var(--ink-strong);
+	color: var(--link);
 }
 .card a:hover {
-	color: rgba(255, 255, 255, 0.75);
+	color: var(--link-hover);
 }
 .card :is(.job-dates, .job-meta, .coursework, .authors, .meta, .date) {
 	color: rgba(255, 255, 255, 0.8);

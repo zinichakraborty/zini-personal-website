@@ -10,4 +10,5 @@ export const SOCIALS = {
 	linkedin: 'https://www.linkedin.com/in/chandreyi-zini-chakraborty/',
 	email: 'mailto:zinichakraborty@gmail.com',
 	scholar: 'https://scholar.google.com/citations?user=b9LkjPAAAAAJ&hl=en',
+	resume: 'https://drive.google.com/file/d/1bEGalz6T_hQIgZL-34Y6MCk5gAI8QMfR/view?usp=sharing',
 };

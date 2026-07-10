@@ -4,7 +4,58 @@ import { SITE_TITLE } from '../consts';
 ---
 
 <Hero title={`Not found | ${SITE_TITLE}`} description="Page not found." centered>
+	<span class="hero-penguin">
+		<img class="penguin-still" src="/penguin-favicon.svg" alt="Penguin" width="256" height="256" />
+		<img
+			class="penguin-wave"
+			src="/penguin-wave.svg"
+			alt=""
+			aria-hidden="true"
+			width="256"
+			height="256"
+		/>
+	</span>
 	<h2 class="hero-name">404</h2>
 	<p class="hero-tagline">that page doesn’t exist</p>
 	<p><a href="/">back home</a></p>
 </Hero>
+
+<style>
+	.hero-penguin {
+		position: relative;
+		display: inline-block;
+		width: 110px;
+		height: 110px;
+		animation: penguin-bob 3s ease-in-out infinite;
+	}
+	@keyframes penguin-bob {
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-8px);
+		}
+	}
+	.hero-penguin img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+	.hero-penguin .penguin-wave {
+		position: absolute;
+		inset: 0;
+		display: none;
+	}
+	.hero-penguin:hover .penguin-still {
+		display: none;
+	}
+	.hero-penguin:hover .penguin-wave {
+		display: block;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.hero-penguin {
+			animation: none;
+		}
+	}
+</style>

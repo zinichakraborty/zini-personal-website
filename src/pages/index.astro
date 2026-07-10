@@ -55,14 +55,14 @@ const formatAuthors = (paper) => {
 // === Contributions ===
 const contributions = [
 	{
-		date: 'Aug 2024',
+		date: '2024',
 		org: 'Bits of Good',
 		orgLink: 'https://bitsofgood.org',
 		body: 'Co-implemented an SDK, email/Amazon S3 file services, and user onboarding for faster app deployment.',
 		link: 'https://github.com/GTBitsOfGood/juno',
 	},
 	{
-		date: 'Jan 2024',
+		date: '2024',
 		org: 'Heart of Passion',
 		orgLink: 'https://www.heartofpassion.org/',
 		body: 'Co-built a donation and event coordination platform for the non-profit, giving chapter organizers a single place to manage retreats for teens fighting cancer.',
@@ -73,17 +73,13 @@ const contributions = [
 
 <Hero title={SITE_TITLE} description={SITE_DESCRIPTION} bare>
 	<section id="home" class="card section section-home">
-		<span class="hero-penguin">
-			<img class="penguin-still" src="/penguin-favicon.svg" alt="Penguin" width="256" height="256" />
-			<img
-				class="penguin-wave"
-				src="/penguin-wave.svg"
-				alt=""
-				aria-hidden="true"
-				width="256"
-				height="256"
-			/>
-		</span>
+		<img
+			class="hero-avatar"
+			src="/profilepic.png"
+			alt="Chandreyi (Zini) Chakraborty"
+			width="860"
+			height="780"
+		/>
 		<h1 class="hero-name">Hi, I'm Chandreyi (Zini) Chakraborty</h1>
 		<p class="hero-fact">B.S./M.S. CS @ Georgia Tech &nbsp;|&nbsp; AI / ML interpretability research</p>
 		<p class="hero-tagline">
@@ -235,6 +231,15 @@ const contributions = [
 		}
 	}
 
+	/* Tighten the space between the stacked Publications and Contributions
+	   sections (card padding + grid row gap otherwise add up). */
+	#publications {
+		padding-bottom: 0.25rem;
+	}
+	#contributions {
+		padding-top: 0.25rem;
+	}
+
 	/* === Section headings === */
 	.section-title {
 		font-size: 1.35rem;
@@ -245,7 +250,7 @@ const contributions = [
 	}
 
 	/* === Home hero === */
-	/* Contain the floated penguin avatar within the hero. */
+	/* Contain the floated avatar within the hero. */
 	.section-home::after {
 		content: '';
 		display: block;
@@ -257,52 +262,20 @@ const contributions = [
 		color: rgba(255, 255, 255, 0.7);
 	}
 	.hero-tagline a {
-		color: var(--ink-strong);
+		color: var(--link);
 		text-decoration: underline;
 		text-underline-offset: 3px;
 	}
 	.hero-tagline a:hover,
 	.hero-tagline a:focus-visible {
-		color: rgba(255, 255, 255, 0.75);
+		color: var(--link-hover);
 	}
 	/* Small avatar floated to the top-right of the intro text. */
-	.hero-penguin {
-		position: relative;
+	.hero-avatar {
 		float: right;
 		width: 110px;
-		height: 110px;
-		margin: 0 0 0.75rem 1.25rem;
-		animation: penguin-bob 3s ease-in-out infinite;
-	}
-	@keyframes penguin-bob {
-		0%,
-		100% {
-			transform: translateY(0);
-		}
-		50% {
-			transform: translateY(-8px);
-		}
-	}
-	.hero-penguin img {
-		display: block;
-		width: 100%;
 		height: auto;
-	}
-	.hero-penguin .penguin-wave {
-		position: absolute;
-		inset: 0;
-		display: none;
-	}
-	.hero-penguin:hover .penguin-still {
-		display: none;
-	}
-	.hero-penguin:hover .penguin-wave {
-		display: block;
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.hero-penguin {
-			animation: none;
-		}
+		margin: 0 0 0.75rem 1.25rem;
 	}
 
 	/* === Papers === */
@@ -340,7 +313,7 @@ const contributions = [
 		font-weight: 700;
 		font-size: 1rem;
 		line-height: 1.4;
-		color: var(--ink-strong);
+		color: var(--link);
 		text-decoration: none;
 	}
 	.title:hover,
@@ -373,7 +346,7 @@ const contributions = [
 	}
 	.item {
 		display: grid;
-		grid-template-columns: 5.5rem 1fr;
+		grid-template-columns: 3rem 1fr;
 		gap: 1rem;
 		padding: 0.8rem 0;
 		border-top: 1px solid rgba(255, 255, 255, 0.25);
@@ -396,7 +369,7 @@ const contributions = [
 	.org {
 		font-weight: 700;
 		font-size: 1rem;
-		color: var(--ink-strong);
+		color: var(--link);
 		text-decoration: none;
 	}
 	.role {
@@ -406,6 +379,7 @@ const contributions = [
 	}
 	.body {
 		margin: 0.3rem 0 0 0;
+		font-size: 0.92rem;
 		line-height: 1.55;
 	}
 	.item-link {
@@ -413,7 +387,7 @@ const contributions = [
 		align-items: center;
 		margin-top: 0.5rem;
 		font-size: 0.8rem;
-		color: var(--ink-strong);
+		color: var(--link);
 		text-decoration: none;
 		font-weight: 600;
 		white-space: nowrap;
