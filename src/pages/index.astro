@@ -1,61 +1,6 @@
 ---
 import Hero from '../layouts/Hero.astro';
-import { SITE_DESCRIPTION, SITE_TITLE, SOCIALS } from '../consts';
-
-// === Background ===
-const experience = [
-	{
-		title: 'Software Engineer Intern',
-		org: 'Bloomberg',
-		location: 'New York, NY',
-		dates: 'June 2025 – August 2025',
-		bullets: [
-			'Built first-of-its-kind, full-stack C++ app for transparent portfolio aggregations via the Bloomberg Terminal',
-			'Reduced runtime from tens of minutes to seconds with a lightweight, parallelized backend service and UI',
-			'Coordinated with cross-team developers to integrate Splunk API trace calls, diagnosing client-reported issues',
-		],
-	},
-	{
-		title: 'Machine Learning Teaching Assistant',
-		org: 'Georgia Institute of Technology',
-		location: 'Atlanta, GA',
-		dates: 'August 2024 – May 2026',
-		bullets: [
-			'Building retrieval-augmented fine-tuned EdStem LLM agent with dynamic databases for Socratic Q&A',
-			'Automate assignment grading through code image detection, instruct students in project design and office hours',
-		],
-	},
-	{
-		title: 'Solutions Engineering Intern',
-		org: 'Deloitte Consulting',
-		location: 'Nashville, TN',
-		dates: 'June 2024 – July 2024',
-		bullets: [
-			'Handle end-to-end production in State of Tennessee Eligibility Benefits Management System Portals in Java Spring',
-			'Discuss with clients on defects and enhancements, actualize SummerEBT Appeals, 600K+ eligible yearly',
-			'Develop DevOps Python automation to restart failing JVMs and Streamlit LLM tool to recommend course paths',
-		],
-	},
-];
-
-const education = [
-	{
-		degree: 'M.S. in Computer Science',
-		org: 'Georgia Institute of Technology',
-		location: 'Atlanta, GA',
-		dates: 'August 2025 – May 2026',
-		concentration: 'Machine Learning',
-		option: 'Research Option',
-	},
-	{
-		degree: 'B.S. in Computer Science',
-		org: 'Georgia Institute of Technology',
-		location: 'Atlanta, GA',
-		dates: 'August 2022 – May 2025',
-		concentration: 'Artificial Intelligence + Computer Networking',
-		option: 'Research Option',
-	},
-];
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 // === Papers === (pulled from Google Scholar; update as new papers come out)
 const papers = [
@@ -107,79 +52,27 @@ const formatAuthors = (paper) => {
 	);
 };
 
-// === News === (recent updates; add new entries to the top)
-const news = [
+// === Contributions ===
+const contributions = [
 	{
-		date: 'Jun 2026',
-		org: 'Allen Institute for AI (AI2)',
-		role: 'Invited Interview',
-		orgLink: 'https://allenai.org',
-		body: 'Invited to interview to advance research on social reasoning data attribution in OLMo 3, AI2’s fully open frontier language model.',
-	},
-	{
-		date: 'Jan 2026',
-		org: 'EleutherAI',
-		role: 'Research Collaborator',
-		orgLink: 'https://www.eleuther.ai',
-		body: 'Partnered with the team behind Bergson to extend their gradient-based attribution methods to social reasoning, tracing model behavior back to its training data.',
-	},
-	{
-		date: 'Jan 2025',
-		org: 'Entertainment Intelligence Lab',
-		role: 'Researcher',
-		orgLink: 'https://eilab.gatech.edu/mark-riedl.html',
-		body: 'Joined Mark Riedl’s lab at Georgia Tech to research human-centered AI, exploring how large language models reason and explain their behavior.',
+		date: 'Aug 2024',
+		org: 'Bits of Good',
+		orgLink: 'https://bitsofgood.org',
+		body: 'Co-implemented an SDK, email/Amazon S3 file services, and user onboarding for faster app deployment.',
+		link: 'https://github.com/GTBitsOfGood/juno',
 	},
 	{
 		date: 'Jan 2024',
-		org: 'Bits of Good',
-		role: 'Full-Stack Developer',
-		orgLink: 'https://bitsofgood.org',
-		body: 'Co-developed a full-stack web platform for Heart of Passion, an Atlanta non-profit serving youth cancer patients, streamlining donations and event coordination for the organization.',
+		org: 'Heart of Passion',
+		orgLink: 'https://www.heartofpassion.org/',
+		body: 'Co-built a donation and event coordination platform for the non-profit, giving chapter organizers a single place to manage retreats for teens fighting cancer.',
 		link: 'https://github.com/GTBitsOfGood/heart-of-passion',
-	},
-	{
-		date: 'Aug 2023',
-		org: 'Fung Group',
-		role: 'Researcher',
-		orgLink: 'https://www.fung-group.org/',
-		body: 'Joined Victor Fung’s group at Georgia Tech, applying machine learning to accelerate materials discovery and design.',
-	},
-	{
-		date: 'Sep 2021',
-		org: 'Girl Scouts STEM Center',
-		role: 'Workshop Instructor',
-		orgLink: 'https://www.girlscoutshcc.org',
-		body: 'Designed and led free, hands-on workshops introducing young Girl Scouts to Artificial Intelligence, demystifying the field and inspiring the next generation of women in STEM.',
-	},
-	{
-		date: 'Jul 2021',
-		org: 'UCSB Research Mentorship Program',
-		role: 'Researcher',
-		orgLink: 'https://www.summer.ucsb.edu/programs/research-mentorship-program/overview',
-		body: 'Presented original mathematics research to an audience of 100+, collaborating with PhD candidate Andres Barei on a method to determine whether a given algebra is standardly stratified.',
-	},
-	{
-		date: 'Jul 2020',
-		org: 'UCSB Summer Research Academies',
-		role: 'Researcher',
-		orgLink: 'https://www.summer.ucsb.edu/programs/summer-research-academies/overview',
-		body: 'Presented at a research seminar to 100+ attendees on a Siamese neural network that jointly predicts the driveability and terrain of car-view landscapes for autonomous navigation.',
-		link: 'https://github.com/zinichakraborty/Using-Deep-Learning-to-Analyze-the-Driveability-of-Autonomous-Vehicles-on-Unmarked-Terrain',
 	},
 ];
 ---
 
 <Hero title={SITE_TITLE} description={SITE_DESCRIPTION} bare>
 	<section id="home" class="card section section-home">
-		<h2 class="hero-name">Chandreyi <span class="hero-nick">(Zini)</span> Chakraborty</h2>
-		<p class="hero-tagline">
-			I'm a Software Engineer at Affirm optimizing and automating the developer and machine learning platform
-			infrastructure. I graduated from my BSCS and MSCS at Georgia Tech and I continue to
-			<a href={SOCIALS.scholar} target="_blank" rel="noopener noreferrer"
-				>research how language models reason</a
-			>.
-		</p>
 		<span class="hero-penguin">
 			<img class="penguin-still" src="/penguin-favicon.svg" alt="Penguin" width="256" height="256" />
 			<img
@@ -191,59 +84,69 @@ const news = [
 				height="256"
 			/>
 		</span>
+		<h1 class="hero-name">Hi, I'm Chandreyi (Zini) Chakraborty</h1>
+		<p class="hero-fact">B.S./M.S. CS @ Georgia Tech &nbsp;|&nbsp; AI / ML interpretability research</p>
+		<p class="hero-tagline">
+			I earned my B.S. and M.S. in Computer Science from
+			<a href="https://www.gatech.edu" target="_blank" rel="noopener noreferrer">Georgia Tech</a>,
+			both with machine learning concentrations. My research focuses on uncovering LLM inner
+			workings through mechanistic interpretability, and leveraging those insights to improve model
+			capability and efficiency.
+		</p>
+		<p class="hero-tagline">
+			I second-authored a
+			<a href="https://arxiv.org/abs/2606.19625" target="_blank" rel="noopener noreferrer"
+				>paper accepted to COLM 2026</a
+			> that attributes social reasoning to training data at the corpus level, working with
+			<a href="https://www.eleuther.ai" target="_blank" rel="noopener noreferrer">EleutherAI</a>. We
+			launched a
+			<a
+				href="https://eilab.gatech.edu/social-data-attribution/"
+				target="_blank"
+				rel="noopener noreferrer">website</a
+			> showcasing this work.
+		</p>
+		<p class="hero-tagline">
+			I am a member of the
+			<a href="https://eilab.gatech.edu" target="_blank" rel="noopener noreferrer"
+				>Entertainment Intelligence and Human-Centered AI Lab</a
+			> under
+			<a href="https://eilab.gatech.edu/mark-riedl.html" target="_blank" rel="noopener noreferrer"
+				>Dr. Mark Riedl</a
+			>, where I published on
+			<a href="https://arxiv.org/abs/2508.15794" target="_blank" rel="noopener noreferrer"
+				>how LLMs understand suspense in stories (COLM 2025)</a
+			>.
+		</p>
+		<p class="hero-tagline">
+			I was a Machine Learning Teaching Assistant under
+			<a href="https://mahdi-roozbahani.github.io/" target="_blank" rel="noopener noreferrer"
+				>Dr. Mahdi Roozbahani</a
+			>, where I developed a Socratic LLM agent that supports TAs in responding to student
+			questions on EdStem using retrieval-augmented fine-tuning.
+		</p>
+		<p class="hero-tagline">
+			On the efficiency side, I co-first-authored a
+			<a href="https://arxiv.org/abs/2604.20079" target="_blank" rel="noopener noreferrer"
+				>paper on the quantization robustness of diffusion LLMs</a
+			> against autoregressive LLMs.
+		</p>
+		<p class="hero-tagline">
+			Previously, I worked at
+			<a
+				href="https://professional.bloomberg.com/products/bloomberg-terminal/"
+				target="_blank"
+				rel="noopener noreferrer">Bloomberg</a
+			>
+			on the Terminal, building an efficient portfolio aggregation service, and before that at
+			<a href="https://www.deloitte.com" target="_blank" rel="noopener noreferrer">Deloitte</a>,
+			where I worked with the Tennessee state government to enhance their Eligibility Benefits
+			Management Portal and integrate SummerEBT Appeals.
+		</p>
 	</section>
 
-	<section id="education" class="card section">
-		<h2 class="section-title">Education</h2>
-		<div class="timeline">
-			{
-				education.map((ed) => (
-					<section class="job">
-						<div class="job-head">
-							<span class="job-title">{ed.degree}</span>
-							<span class="job-dates">{ed.dates}</span>
-						</div>
-						<div class="job-meta">
-							<span class="job-org">{ed.org}</span>
-							<span class="job-loc">{ed.location}</span>
-						</div>
-						<div class="ed-detail">
-							<span class="ed-tag">{ed.concentration}</span>
-							<span class="ed-tag ed-tag--option">{ed.option}</span>
-						</div>
-					</section>
-				))
-			}
-		</div>
-	</section>
-
-	<section id="experience" class="card section">
-		<h2 class="section-title">Experience</h2>
-		<div class="timeline">
-			{
-				experience.map((job) => (
-					<section class="job">
-						<div class="job-head">
-							<span class="job-title">{job.title}</span>
-							<span class="job-dates">{job.dates}</span>
-						</div>
-						<div class="job-meta">
-							<span class="job-org">{job.org}</span>
-							<span class="job-loc">{job.location}</span>
-						</div>
-						<ul>
-							{job.bullets.map((bullet) => (
-								<li>{bullet}</li>
-							))}
-						</ul>
-					</section>
-				))
-			}
-		</div>
-	</section>
-
-	<section id="papers" class="card section">
-		<h2 class="section-title">Papers</h2>
+	<section id="publications" class="card section">
+		<h2 class="section-title">Publications</h2>
 		<ol class="papers">
 			{
 				papers.map((paper) => (
@@ -265,11 +168,11 @@ const news = [
 		</ol>
 	</section>
 
-	<section id="news" class="card section">
-		<h2 class="section-title">News</h2>
+	<section id="contributions" class="card section">
+		<h2 class="section-title">Open-Source Contributions</h2>
 		<ul class="news">
 			{
-				news.map((item) => (
+				contributions.map((item) => (
 					<li class="item">
 						<span class="date">{item.date}</span>
 						<div class="content">
@@ -298,54 +201,77 @@ const news = [
 </Hero>
 
 <style>
-	/* === Section headings (pink-bar accent) === */
+	/* On wide screens the bio fills the left column while Publications and
+	   Contributions stack in the right column (grid defined in global.css).
+	   Divider lines: vertical between the columns, horizontal between the
+	   two right-column sections. */
+	@media (min-width: 73.01rem) {
+		#home {
+			grid-column: 1;
+			grid-row: 1 / span 2;
+			border-right: 1px solid rgba(255, 255, 255, 0.25);
+			padding-right: 2.5rem;
+			/* Stretch past the content so the vertical line runs the full
+			   height of both right-column sections and meets the divider. */
+			align-self: stretch;
+		}
+		#publications {
+			grid-column: 2;
+			grid-row: 1;
+		}
+		#contributions {
+			grid-column: 2;
+			grid-row: 2;
+			border-top: 1px solid rgba(255, 255, 255, 0.25);
+			/* Stretch the border-box left across the column gap so the divider
+			   touches the vertical line; padding keeps the content aligned. */
+			margin-left: -2.5rem;
+			padding-left: 2.5rem;
+		}
+		/* The divider above Contributions replaces the papers list's own
+		   closing border, so the line isn't doubled. */
+		#publications .paper:last-child {
+			border-bottom: none;
+		}
+	}
+
+	/* === Section headings === */
 	.section-title {
-		display: flex;
-		align-items: center;
-		gap: 0.65rem;
-		font-size: 1.65rem;
-		margin: 2.25rem 0 1.25rem;
+		font-size: 1.35rem;
+		margin: 1.5rem 0 0.85rem;
 	}
 	.section-title:first-of-type {
 		margin-top: 0.25rem;
 	}
-	.section-title::before {
-		content: '';
-		width: 0.45rem;
-		height: 1.5rem;
-		border-radius: 999px;
-		background: hsl(320, 100%, 70%);
-	}
 
 	/* === Home hero === */
-	/* Offset by the fixed sidebar would clip the no-wrap name; let it wrap instead. */
-	.section-home .hero-name {
-		white-space: normal;
-		max-width: 100%;
+	/* Contain the floated penguin avatar within the hero. */
+	.section-home::after {
+		content: '';
+		display: block;
+		clear: both;
 	}
-	.hero-bio {
-		max-width: 34rem;
-		margin: 0.75rem auto 0;
+	.hero-fact {
+		margin: 0 0 0.85rem;
 		font-size: 0.95rem;
-		line-height: 1.6;
-		opacity: 0.75;
+		color: rgba(255, 255, 255, 0.7);
 	}
 	.hero-tagline a {
-		color: hsl(220, 100%, 70%);
-		text-decoration: none;
+		color: var(--ink-strong);
+		text-decoration: underline;
+		text-underline-offset: 3px;
 	}
 	.hero-tagline a:hover,
 	.hero-tagline a:focus-visible {
-		color: hsl(320, 100%, 70%);
-		text-decoration: underline;
+		color: rgba(255, 255, 255, 0.75);
 	}
+	/* Small avatar floated to the top-right of the intro text. */
 	.hero-penguin {
 		position: relative;
-		display: block;
-		width: min(256px, 55vw);
-		height: auto;
-		aspect-ratio: 1 / 1;
-		margin: 1.5rem 0 0;
+		float: right;
+		width: 110px;
+		height: 110px;
+		margin: 0 0 0.75rem 1.25rem;
 		animation: penguin-bob 3s ease-in-out infinite;
 	}
 	@keyframes penguin-bob {
@@ -356,16 +282,6 @@ const news = [
 		50% {
 			transform: translateY(-8px);
 		}
-	}
-	.hero-nick {
-		display: inline-block;
-		transition:
-			transform 0.2s ease,
-			color 0.2s ease;
-	}
-	.hero-nick:hover {
-		transform: scale(1.25);
-		color: hsl(220, 100%, 70%);
 	}
 	.hero-penguin img {
 		display: block;
@@ -387,91 +303,6 @@ const news = [
 		.hero-penguin {
 			animation: none;
 		}
-		.hero-nick {
-			transition: color 0.2s ease;
-		}
-	}
-
-	/* === Background: experience + education === */
-	.job {
-		padding: 1rem 0;
-		border-top: 1px solid color-mix(in srgb, currentColor 12%, transparent);
-	}
-	.job:last-child {
-		border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
-	}
-	.job-head {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		gap: 1rem;
-		flex-wrap: wrap;
-	}
-	.job-title {
-		font-weight: 700;
-		font-size: 1.05rem;
-	}
-	.job-dates {
-		font-size: 0.82rem;
-		white-space: nowrap;
-		opacity: 0.6;
-		font-variant-numeric: tabular-nums;
-	}
-	.job-meta {
-		font-size: 0.92rem;
-		margin-top: 0.25rem;
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		gap: 1rem;
-		flex-wrap: wrap;
-	}
-	.job-org {
-		color: hsl(220, 100%, 72%);
-		font-weight: 600;
-	}
-	.job-loc {
-		font-size: 0.85rem;
-		white-space: nowrap;
-		opacity: 0.65;
-	}
-	.job ul {
-		margin-top: 0.65rem;
-		padding-left: 1.1rem;
-		list-style: none;
-	}
-	.job li {
-		position: relative;
-		margin-bottom: 0.35rem;
-		line-height: 1.55;
-		font-size: 0.95rem;
-	}
-	.job li::before {
-		content: '▹';
-		position: absolute;
-		left: -1.1rem;
-		color: hsl(320, 100%, 70%);
-	}
-	.ed-detail {
-		margin-top: 0.55rem;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
-	}
-	.ed-tag {
-		font-size: 0.78rem;
-		font-weight: 500;
-		letter-spacing: 0.01em;
-		padding: 0.18rem 0.6rem;
-		border-radius: 999px;
-		color: hsl(220, 100%, 80%);
-		background: color-mix(in srgb, hsl(220, 100%, 72%) 12%, transparent);
-		border: 1px solid color-mix(in srgb, hsl(220, 100%, 72%) 28%, transparent);
-	}
-	.ed-tag--option {
-		color: hsl(320, 100%, 82%);
-		background: color-mix(in srgb, hsl(320, 100%, 70%) 12%, transparent);
-		border-color: color-mix(in srgb, hsl(320, 100%, 70%) 28%, transparent);
 	}
 
 	/* === Papers === */
@@ -486,13 +317,13 @@ const news = [
 	}
 	.paper {
 		display: grid;
-		grid-template-columns: 3.5rem 1fr;
-		gap: 1.25rem;
-		padding: 1rem 0;
-		border-top: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+		grid-template-columns: 3rem 1fr;
+		gap: 1rem;
+		padding: 0.8rem 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.25);
 	}
 	.paper:last-child {
-		border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 	}
 	.year {
 		font-size: 0.85rem;
@@ -507,9 +338,9 @@ const news = [
 	.title {
 		display: block;
 		font-weight: 700;
-		font-size: 1.05rem;
+		font-size: 1rem;
 		line-height: 1.4;
-		color: hsl(220, 100%, 72%);
+		color: var(--ink-strong);
 		text-decoration: none;
 	}
 	.title:hover,
@@ -529,33 +360,26 @@ const news = [
 		opacity: 0.7;
 	}
 	.cofirst {
-		display: inline-block;
 		margin-left: 0.5rem;
-		padding: 0.05rem 0.45rem;
-		border-radius: 999px;
-		font-size: 0.72rem;
-		font-weight: 600;
-		letter-spacing: 0.02em;
-		color: hsl(220, 100%, 78%);
-		background: color-mix(in srgb, hsl(220, 100%, 72%) 16%, transparent);
-		opacity: 1;
+		font-size: 0.8rem;
+		opacity: 0.7;
 	}
 
-	/* === News === */
+	/* === Contributions === */
 	.news {
 		list-style: none;
 		padding: 0;
-		margin: 1.25rem 0 0 0;
+		margin: 1rem 0 0 0;
 	}
 	.item {
 		display: grid;
-		grid-template-columns: 6.5rem 1fr;
-		gap: 1.25rem;
-		padding: 0.9rem 0;
-		border-top: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+		grid-template-columns: 5.5rem 1fr;
+		gap: 1rem;
+		padding: 0.8rem 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.25);
 	}
 	.item:last-child {
-		border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 	}
 	.date {
 		font-size: 0.85rem;
@@ -571,19 +395,13 @@ const news = [
 	}
 	.org {
 		font-weight: 700;
-		font-size: 1.05rem;
-		color: hsl(220, 100%, 72%);
+		font-size: 1rem;
+		color: var(--ink-strong);
 		text-decoration: none;
 	}
 	.role {
-		font-size: 0.75rem;
-		font-weight: 600;
-		letter-spacing: 0.02em;
-		text-transform: uppercase;
+		font-size: 0.82rem;
 		opacity: 0.7;
-		padding: 0.1rem 0.5rem;
-		border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
-		border-radius: 999px;
 		white-space: nowrap;
 	}
 	.body {
@@ -595,7 +413,7 @@ const news = [
 		align-items: center;
 		margin-top: 0.5rem;
 		font-size: 0.8rem;
-		color: hsl(220, 100%, 72%);
+		color: var(--ink-strong);
 		text-decoration: none;
 		font-weight: 600;
 		white-space: nowrap;

@@ -5,7 +5,7 @@
  */
 
 /*
-  Tailwind v4 — theme + utilities only (no preflight) so the React hero island's
+  Tailwind v4 - theme + utilities only (no preflight) so the React hero island's
   utility classes work without resetting the rest of the site's Bear Blog styles.
  */
 @layer theme, base, components, utilities;
@@ -149,12 +149,21 @@ hr {
 }
 
 /*
-  === Shader hero shell (applied to every page via the Hero layout) ===
-  Placed after the Bear Blog rules above so these unlayered rules win and the
-  content reads as light text on the black card over the shader background.
+  === Magenta profile shell (applied to every page via the Hero layout) ===
+  A clean academic-profile look: solid magenta page, white text sitting
+  directly on it (no cards). Placed after the Bear Blog rules above so these
+  unlayered rules win.
  */
+:root {
+	--magenta: hsl(322, 68%, 30%);
+	/* Softened whites: body text sits a touch below pure white to cut glare,
+	   headings/links a touch above it for hierarchy. */
+	--ink: rgba(255, 255, 255, 0.87);
+	--ink-strong: rgba(255, 255, 255, 0.96);
+}
 body {
-	background: #000;
+	background: var(--magenta);
+	color: var(--ink);
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
@@ -162,49 +171,7 @@ body {
 }
 html {
 	overflow-x: hidden;
-	font-size: 18px;
-}
-
-.shader-nav {
-	position: fixed;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	z-index: 20;
-	box-sizing: border-box;
-	width: 13rem;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	gap: 0.5rem;
-	overflow-y: auto;
-	padding: 1.5rem 1.25rem;
-	background: rgba(0, 0, 0, 0.55);
-	backdrop-filter: blur(12px);
-	-webkit-backdrop-filter: blur(12px);
-	border-right: 1px solid rgba(255, 255, 255, 0.12);
-	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-	font-size: 1.15rem;
-}
-.shader-nav a {
-	color: hsl(320, 100%, 70%);
-	text-decoration: none;
-	padding: 0.45rem 1.2rem;
-	border: 1px solid transparent;
-	border-radius: 0.5rem;
-	transition:
-		background 0.15s,
-		border-color 0.15s,
-		color 0.15s;
-}
-.shader-nav a:hover {
-	color: hsl(220, 100%, 70%);
-	border-color: currentColor;
-}
-.shader-nav a.active {
-	background: hsl(320, 100%, 70%);
-	border-color: hsl(320, 100%, 70%);
-	color: #000;
+	font-size: 16px;
 }
 
 .card-wrap {
@@ -219,39 +186,45 @@ html {
 	justify-content: center;
 	align-items: flex-start;
 	padding: 3rem 1.5rem 1.5rem;
-	padding-left: 14.5rem;
 }
 .card-wrap.center {
 	flex-direction: column;
 	align-items: center;
 }
-/* Single-page mode: stack section cards centered in the space that stays at
-   least 20rem clear of the left edge (which also clears the nav). */
+/* Single-page mode: centered grid of section cards. One column by default;
+   on wide screens the page assigns sections to a second column on the right. */
 .card-wrap.page-stack {
-	flex-direction: column;
-	align-items: center;
-	gap: 1.75rem;
-	padding-left: 14rem;
+	display: grid;
+	grid-template-columns: minmax(0, 38rem);
+	justify-content: center;
+	align-items: start;
+	gap: 1.25rem 2.5rem;
+}
+@media (min-width: 73.01rem) {
+	.card-wrap.page-stack {
+		grid-template-columns: minmax(0, 38rem) minmax(0, 38rem);
+	}
 }
 .card-wrap.page-stack .card {
 	width: 100%;
 	min-width: 0;
-	max-width: 56rem;
+	max-width: 38rem;
 }
 
 .shader-footer {
-	position: relative;
-	z-index: 10;
+	position: fixed;
+	top: 1.25rem;
+	right: 1.5rem;
+	z-index: 20;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 1.75rem;
-	padding: 1rem;
-	background: #000;
+	gap: 1.25rem;
+	background: transparent;
 }
 .shader-footer a {
 	display: inline-flex;
-	color: hsl(320, 100%, 70%);
+	color: rgba(255, 255, 255, 0.8);
 	transition: color 0.15s;
 }
 .shader-footer svg {
@@ -259,19 +232,17 @@ html {
 	height: 36px;
 }
 .shader-footer a:hover {
-	color: hsl(220, 100%, 70%);
+	color: var(--ink-strong);
 }
 
 .card {
 	box-sizing: border-box;
 	width: 94vw;
 	max-width: 1100px;
-	background: #000;
-	color: #fff;
-	border-radius: 1.5rem;
-	padding: 2.5rem 2.75rem;
+	background: transparent;
+	color: var(--ink);
+	padding: 1.5rem 0;
 	overflow-wrap: break-word;
-	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
 	animation: card-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 @keyframes card-rise {
@@ -305,14 +276,8 @@ html {
 	scroll-margin-top: 2rem;
 }
 .section-home {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
 	padding-top: 1.5rem;
 	padding-bottom: 1.5rem;
-	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 @media (prefers-reduced-motion: reduce) {
 	html {
@@ -322,41 +287,39 @@ html {
 
 /* Light text + accent links inside the card */
 .card :is(h1, h2, h3, h4, h5, h6) {
-	color: #fff;
+	color: var(--ink-strong);
 }
 .card a {
-	color: hsl(220, 100%, 70%);
+	color: var(--ink-strong);
 }
 .card a:hover {
-	color: hsl(320, 100%, 70%);
+	color: rgba(255, 255, 255, 0.75);
 }
 .card :is(.job-dates, .job-meta, .coursework, .authors, .meta, .date) {
-	color: rgba(255, 255, 255, 0.65);
+	color: rgba(255, 255, 255, 0.8);
 }
 .card .papers li {
-	border-bottom-color: rgba(255, 255, 255, 0.15);
+	border-bottom-color: rgba(255, 255, 255, 0.25);
 }
 /* Author list stays muted; only the site owner's bolded name is accented. */
 .card .authors strong {
-	color: hsl(320, 100%, 70%);
+	color: var(--ink-strong);
 }
 .card .title {
 	transition: color 0.18s ease;
 }
 .card .title:hover,
 .card li a:hover :is(h4, .date) {
-	color: hsl(320, 100%, 70%);
+	color: rgba(255, 255, 255, 0.75);
 }
 
 /* Homepage hero card */
 .card .hero-name {
-	color: hsl(320, 100%, 70%);
-	white-space: nowrap;
-	text-transform: uppercase;
-	font-size: clamp(1.6rem, 4.5vw, 3.25rem);
-	font-weight: 400;
-	line-height: 1.1;
-	margin-bottom: 1rem;
+	color: var(--ink-strong);
+	font-size: 2rem;
+	font-weight: 600;
+	line-height: 1.15;
+	margin-bottom: 0.75rem;
 }
 .card .hero-tagline {
 	font-size: 1.25rem;
@@ -365,13 +328,6 @@ html {
 /* === Light mode: flip black surfaces to white + dark text === */
 :root[data-theme='light'] body {
 	background: #fff;
-}
-:root[data-theme='light'] .shader-footer {
-	background: #fff;
-}
-:root[data-theme='light'] .shader-nav {
-	background: rgba(255, 255, 255, 0.75);
-	border-right-color: rgba(0, 0, 0, 0.12);
 }
 :root[data-theme='light'] .card {
 	background: #fff;
@@ -388,51 +344,27 @@ html {
 	border-bottom-color: rgba(0, 0, 0, 0.12);
 }
 /* In light mode, pink text becomes the shader's blue (not black). */
-:root[data-theme='light'] .shader-nav a,
 :root[data-theme='light'] .shader-footer a,
 :root[data-theme='light'] .card .hero-name,
 :root[data-theme='light'] .card .authors strong {
 	color: hsl(220, 100%, 70%);
 }
-:root[data-theme='light'] .shader-nav a.active {
-	background: hsl(220, 100%, 70%);
-	border-color: hsl(220, 100%, 70%);
-	color: #fff;
-}
 
 @media (max-width: 720px) {
-	.shader-nav {
-		flex-direction: row;
-		align-items: center;
-		width: auto;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: auto;
-		justify-content: flex-start;
-		overflow-x: auto;
-		gap: 0.5rem;
-		background: #000;
-		border-right: none;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-		font-size: 1.05rem;
-		padding: 0.75rem 1rem;
-	}
-	.shader-nav a {
-		flex-shrink: 0;
-		white-space: nowrap;
-	}
 	.card-wrap {
-		padding: 5rem 1rem 1.5rem;
-	}
-	.card-wrap.page-stack {
-		padding: 5rem 1rem 1.5rem;
+		padding: 1.5rem 1rem;
 	}
 	.card {
 		padding: 1.5rem 1.25rem;
 	}
 	.card .hero-name {
 		white-space: normal;
+	}
+	/* Keep the fixed top-right links from overlapping content on small
+	   screens by returning them to the flow at the bottom. */
+	.shader-footer {
+		position: static;
+		padding: 1rem;
 	}
 }
 

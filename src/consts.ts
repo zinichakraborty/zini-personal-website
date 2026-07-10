@@ -10,5 +10,4 @@ export const SOCIALS = {
 	linkedin: 'https://www.linkedin.com/in/chandreyi-zini-chakraborty/',
 	email: 'mailto:zinichakraborty@gmail.com',
 	scholar: 'https://scholar.google.com/citations?user=b9LkjPAAAAAJ&hl=en',
-	huggingface: 'https://huggingface.co/zchakraborty',
 };

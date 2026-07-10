@@ -77,7 +77,7 @@ const posts = (await getCollection('blog')).sort(
 			}
 		</style>
 	<section>
-		{posts.length === 0 && <p>No posts yet — check back soon.</p>}
+		{posts.length === 0 && <p>No posts yet. Check back soon.</p>}
 		<ul>
 			{
 				posts.map((post) => (
