@@ -4,7 +4,7 @@
 export const SITE_TITLE = 'Zini Chakraborty';
 export const SITE_DESCRIPTION = 'Personal site of Chandreyi (Zini) Chakraborty.';
 
-// TODO: fill these in. They power the header/footer links and contact.
+// Social/profile links used by the footer icons and contact.
 export const SOCIALS = {
 	github: 'https://github.com/zinichakraborty',
 	linkedin: 'https://www.linkedin.com/in/chandreyi-zini-chakraborty/',

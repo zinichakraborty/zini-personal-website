@@ -4,17 +4,8 @@
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
 
-/*
-  Tailwind v4 - theme + utilities only (no preflight) so the React hero island's
-  utility classes work without resetting the rest of the site's Bear Blog styles.
- */
-@layer theme, base, components, utilities;
-@import 'tailwindcss/theme.css' layer(theme);
-@import 'tailwindcss/utilities.css' layer(utilities);
-
 :root {
 	--accent: #2337ff;
-	--accent-dark: #000d8a;
 	--black: 15, 18, 25;
 	--gray: 96, 115, 159;
 	--gray-light: 229, 233, 240;
@@ -150,34 +141,59 @@ hr {
 
 /*
   === Magenta profile shell (applied to every page via the Hero layout) ===
-  A clean academic-profile look: solid magenta page, white text sitting
-  directly on it (no cards). Placed after the Bear Blog rules above so these
-  unlayered rules win.
+  A layered magenta scene — diagonal light falloff, colored glows, film
+  grain — with content sitting on elevated translucent cards. Placed after
+  the Bear Blog rules above so these rules win.
  */
 :root {
-	--magenta: hsl(322, 68%, 30%);
-	/* Softened whites: body text sits a touch below pure white to cut glare,
-	   headings/links a touch above it for hierarchy. */
+	--magenta: rgb(79, 2, 64);
 	--ink: rgba(255, 255, 255, 0.87);
 	--ink-strong: rgba(255, 255, 255, 0.96);
 	--link: hsl(320, 100%, 78%);
 	--link-hover: hsl(320, 100%, 88%);
+	--hairline: rgba(255, 255, 255, 0.16);
+	--row-hover: rgba(255, 255, 255, 0.05);
 }
 :root[data-theme='light'] {
 	--link: hsl(220, 100%, 70%);
 	--link-hover: hsl(220, 100%, 55%);
+	--hairline: rgba(0, 0, 0, 0.12);
+	--row-hover: rgba(0, 0, 0, 0.04);
 }
 body {
-	background: var(--magenta);
+	/* Layered fixed gradients: a pink glow at the top-right, deep purple
+	   shadow at the bottom-left, and a diagonal light falloff across the
+	   page, so the magenta reads as a lit scene instead of a flat fill. */
+	background:
+		radial-gradient(1100px 800px at 85% -10%, rgba(255, 122, 216, 0.16), transparent 62%),
+		radial-gradient(1200px 900px at -10% 115%, rgba(28, 0, 70, 0.6), transparent 60%),
+		linear-gradient(165deg, rgb(97, 10, 79) 0%, var(--magenta) 42%, rgb(43, 1, 38) 100%);
+	background-attachment: fixed;
 	color: var(--ink);
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	overflow-x: hidden;
+	-webkit-font-smoothing: antialiased;
+}
+/* Film grain over the background (content sits above it at z-index 10). */
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	opacity: 0.05;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 html {
 	overflow-x: hidden;
 	font-size: 16px;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+:root[data-theme='light'] html {
+	scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
 }
 
 .card-wrap {
@@ -191,7 +207,7 @@ html {
 	display: flex;
 	justify-content: center;
 	align-items: flex-start;
-	padding: 3rem 1.5rem 1.5rem;
+	padding: 1.5rem;
 }
 .card-wrap.center {
 	flex-direction: column;
@@ -209,6 +225,11 @@ html {
 @media (min-width: 73.01rem) {
 	.card-wrap.page-stack {
 		grid-template-columns: minmax(0, 38rem) minmax(0, 38rem);
+		/* The tall bio card spans both rows; pinning row 1 to its content
+		   height and letting row 2 absorb the slack keeps the vertical gap
+		   between the right-column cards equal to the horizontal one. */
+		grid-template-rows: auto 1fr;
+		gap: 2.5rem;
 	}
 }
 .card-wrap.page-stack .card {
@@ -217,21 +238,27 @@ html {
 	max-width: 38rem;
 }
 
+/* In-flow header strip: as a flex child of <body> pulled above <main> via
+   order, the pill can never overlap the content at any viewport width. */
 .shader-footer {
-	position: absolute;
-	top: 1.25rem;
-	right: 1.5rem;
-	z-index: 20;
+	align-self: flex-end;
+	order: -1;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	gap: 1.25rem;
-	background: transparent;
+	margin: 1rem 1.5rem 0 0;
+	background: rgba(255, 255, 255, 0.07);
+	border: 1px solid rgba(255, 255, 255, 0.13);
+	border-radius: 999px;
+	padding: 0.4rem 0.9rem;
 }
 .shader-footer a {
 	display: inline-flex;
 	color: rgba(255, 255, 255, 0.8);
-	transition: color 0.15s;
+	transition:
+		color 0.15s,
+		transform 0.15s ease;
 }
 .shader-footer svg {
 	width: 36px;
@@ -239,15 +266,25 @@ html {
 }
 .shader-footer a:hover {
 	color: var(--ink-strong);
+	transform: translateY(-2px);
 }
 
 .card {
+	--card-pad-x: 2rem;
 	box-sizing: border-box;
 	width: 94vw;
 	max-width: 1100px;
-	background: transparent;
+	/* Elevated translucent panel: light border, inset top highlight, and a
+	   drop shadow lift the content off the page. */
+	background: rgba(255, 255, 255, 0.045);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 18px;
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.09),
+		0 24px 48px -12px rgba(20, 0, 18, 0.45);
+	overflow: clip;
 	color: var(--ink);
-	padding: 1.5rem 0;
+	padding: 1.75rem var(--card-pad-x);
 	overflow-wrap: break-word;
 	animation: card-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -264,14 +301,6 @@ html {
 .card-centered {
 	text-align: center;
 	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-.card-wide {
-	max-width: 1600px;
-	width: 96vw;
-}
-.card-fit {
-	width: fit-content;
-	max-width: 94vw;
 }
 
 /* Single-page section cards + smooth anchor scrolling. */
@@ -297,15 +326,22 @@ html {
 }
 .card a {
 	color: var(--link);
+	transition: color 0.18s ease;
 }
 .card a:hover {
 	color: var(--link-hover);
 }
-.card :is(.job-dates, .job-meta, .coursework, .authors, .meta, .date) {
-	color: rgba(255, 255, 255, 0.8);
+::selection {
+	background: var(--link);
+	color: var(--magenta);
 }
-.card .papers li {
-	border-bottom-color: rgba(255, 255, 255, 0.25);
+:focus-visible {
+	outline: 2px solid var(--link);
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+.card :is(.authors, .date) {
+	color: rgba(255, 255, 255, 0.8);
 }
 /* Author list stays muted; only the site owner's bolded name is accented. */
 .card .authors strong {
@@ -321,11 +357,16 @@ html {
 
 /* Homepage hero card */
 .card .hero-name {
-	color: var(--ink-strong);
-	font-size: 2rem;
-	font-weight: 600;
-	line-height: 1.15;
+	font-size: clamp(2.1rem, 1.6rem + 2vw, 2.75rem);
+	font-weight: 700;
+	line-height: 1.12;
+	letter-spacing: -0.02em;
+	text-wrap: balance;
 	margin-bottom: 0.75rem;
+	background: linear-gradient(115deg, var(--ink-strong) 35%, hsl(320, 100%, 80%));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
 }
 .card .hero-tagline {
 	font-size: 1.25rem;
@@ -338,22 +379,34 @@ html {
 :root[data-theme='light'] .card {
 	background: #fff;
 	color: #000;
+	border-color: rgba(0, 0, 0, 0.09);
 	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+:root[data-theme='light'] .shader-footer {
+	background: rgba(0, 0, 0, 0.05);
+	border-color: rgba(0, 0, 0, 0.12);
 }
 :root[data-theme='light'] .card :is(h1, h2, h3, h4, h5, h6) {
 	color: #000;
 }
-:root[data-theme='light'] .card :is(.job-dates, .job-meta, .coursework, .authors, .meta, .date) {
+:root[data-theme='light'] .card :is(.authors, .date) {
 	color: rgba(0, 0, 0, 0.6);
 }
-:root[data-theme='light'] .card .papers li {
-	border-bottom-color: rgba(0, 0, 0, 0.12);
-}
-/* In light mode, pink text becomes the shader's blue (not black). */
+/* In light mode, pink text becomes the light-mode accent blue (not black). */
 :root[data-theme='light'] .shader-footer a,
 :root[data-theme='light'] .card .hero-name,
 :root[data-theme='light'] .card .authors strong {
 	color: hsl(220, 100%, 70%);
+}
+/* Gradient name text is dark-mode only; fall back to flat blue in light. */
+:root[data-theme='light'] .card .hero-name {
+	background: none;
+	-webkit-background-clip: initial;
+	background-clip: initial;
+}
+:root[data-theme='light'] ::selection {
+	background: hsl(220, 100%, 70%);
+	color: #fff;
 }
 
 @media (max-width: 720px) {
@@ -361,22 +414,24 @@ html {
 		padding: 1.5rem 1rem;
 	}
 	.card {
-		padding: 1.5rem 1.25rem;
+		--card-pad-x: 1.25rem;
+		padding: 1.5rem var(--card-pad-x);
 	}
 	.card .hero-name {
 		white-space: normal;
 	}
-	/* Keep the fixed top-right links from overlapping content on small
-	   screens by returning them to the flow at the bottom. */
+	/* On small screens the links move to a centered strip below the content. */
 	.shader-footer {
-		position: static;
-		padding: 1rem;
+		align-self: center;
+		order: 0;
+		margin: 0 0 1rem;
 	}
 }
 
 @media (max-width: 26rem) {
 	.card {
-		padding: 1.25rem 1rem;
+		--card-pad-x: 1rem;
+		padding: 1.25rem var(--card-pad-x);
 	}
 	.shader-footer {
 		gap: 1rem;
@@ -401,27 +456,27 @@ html {
 	background-size: 100% 1.5px;
 }
 
-/* Staggered entrance for content list rows (papers, news, experience). */
+/* Staggered entrance for content list rows (papers, contributions). */
 @media (prefers-reduced-motion: no-preference) {
-	.card :is(.paper, .item, .job) {
+	.card :is(.paper, .item) {
 		animation: list-reveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
 	}
-	.card :is(.paper, .item, .job):nth-child(1) {
+	.card :is(.paper, .item):nth-child(1) {
 		animation-delay: 0.1s;
 	}
-	.card :is(.paper, .item, .job):nth-child(2) {
+	.card :is(.paper, .item):nth-child(2) {
 		animation-delay: 0.17s;
 	}
-	.card :is(.paper, .item, .job):nth-child(3) {
+	.card :is(.paper, .item):nth-child(3) {
 		animation-delay: 0.24s;
 	}
-	.card :is(.paper, .item, .job):nth-child(4) {
+	.card :is(.paper, .item):nth-child(4) {
 		animation-delay: 0.31s;
 	}
-	.card :is(.paper, .item, .job):nth-child(5) {
+	.card :is(.paper, .item):nth-child(5) {
 		animation-delay: 0.38s;
 	}
-	.card :is(.paper, .item, .job):nth-child(6) {
+	.card :is(.paper, .item):nth-child(6) {
 		animation-delay: 0.45s;
 	}
 }
@@ -436,7 +491,7 @@ html {
 	}
 }
 
-/* Honor the same reduced-motion preference the shader respects. */
+/* Honor the user's reduced-motion preference. */
 @media (prefers-reduced-motion: reduce) {
 	.card {
 		animation: none;

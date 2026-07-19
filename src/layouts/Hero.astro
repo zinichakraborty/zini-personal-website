@@ -5,17 +5,13 @@ import { SOCIALS } from '../consts';
 interface Props {
 	title: string;
 	description: string;
-	/** Vertically center the card and center its text (used by the homepage). */
+	/** Vertically center the card and center its text (used by the 404 page). */
 	centered?: boolean;
-	/** Use a much wider card (used by content-heavy pages). */
-	wide?: boolean;
-	/** Shrink the card to fit its widest line of content. */
-	fit?: boolean;
 	/** Single-page mode: render the slot directly (sections supply their own cards). */
 	bare?: boolean;
 }
 
-const { title, description, centered = false, wide = false, fit = false, bare = false } = Astro.props;
+const { title, description, centered = false, bare = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -31,9 +27,7 @@ const { title, description, centered = false, wide = false, fit = false, bare = 
 				</main>
 			) : (
 				<main class:list={['card-wrap', { center: centered }]}>
-					<div
-						class:list={['card', { 'card-centered': centered, 'card-wide': wide, 'card-fit': fit }]}
-					>
+					<div class:list={['card', { 'card-centered': centered }]}>
 						<slot />
 					</div>
 					<slot name="below" />

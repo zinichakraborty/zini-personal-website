@@ -198,18 +198,12 @@ const contributions = [
 
 <style>
 	/* On wide screens the bio fills the left column while Publications and
-	   Contributions stack in the right column (grid defined in global.css).
-	   Divider lines: vertical between the columns, horizontal between the
-	   two right-column sections. */
+	   Contributions stack in the right column (grid defined in global.css);
+	   each section renders as its own elevated card. */
 	@media (min-width: 73.01rem) {
 		#home {
 			grid-column: 1;
 			grid-row: 1 / span 2;
-			border-right: 1px solid rgba(255, 255, 255, 0.25);
-			padding-right: 2.5rem;
-			/* Stretch past the content so the vertical line runs the full
-			   height of both right-column sections and meets the divider. */
-			align-self: stretch;
 		}
 		#publications {
 			grid-column: 2;
@@ -218,31 +212,13 @@ const contributions = [
 		#contributions {
 			grid-column: 2;
 			grid-row: 2;
-			border-top: 1px solid rgba(255, 255, 255, 0.25);
-			/* Stretch the border-box left across the column gap so the divider
-			   touches the vertical line; padding keeps the content aligned. */
-			margin-left: -2.5rem;
-			padding-left: 2.5rem;
 		}
-		/* The divider above Contributions replaces the papers list's own
-		   closing border, so the line isn't doubled. */
-		#publications .paper:last-child {
-			border-bottom: none;
-		}
-	}
-
-	/* Tighten the space between the stacked Publications and Contributions
-	   sections (card padding + grid row gap otherwise add up). */
-	#publications {
-		padding-bottom: 0.25rem;
-	}
-	#contributions {
-		padding-top: 0.25rem;
 	}
 
 	/* === Section headings === */
 	.section-title {
 		font-size: 1.35rem;
+		letter-spacing: -0.01em;
 		margin: 1.5rem 0 0.85rem;
 	}
 	.section-title:first-of-type {
@@ -259,44 +235,67 @@ const contributions = [
 	.hero-fact {
 		margin: 0 0 0.85rem;
 		font-size: 0.95rem;
+		letter-spacing: 0.01em;
 		color: rgba(255, 255, 255, 0.7);
 	}
 	.hero-tagline a {
 		color: var(--link);
 		text-decoration: underline;
+		text-decoration-thickness: 1px;
 		text-underline-offset: 3px;
+		text-decoration-color: color-mix(in srgb, var(--link) 45%, transparent);
+		transition:
+			color 0.18s ease,
+			text-decoration-color 0.18s ease;
 	}
 	.hero-tagline a:hover,
 	.hero-tagline a:focus-visible {
 		color: var(--link-hover);
+		text-decoration-color: var(--link-hover);
 	}
-	/* Small avatar floated to the top-right of the intro text. */
+	/* Circular avatar with a bright ring, floated to the top-right of the
+	   intro text. */
 	.hero-avatar {
 		float: right;
-		width: 110px;
+		width: 150px;
 		height: auto;
 		margin: 0 0 0.75rem 1.25rem;
+		aspect-ratio: 1;
+		object-fit: cover;
+		border-radius: 50%;
+		box-shadow:
+			0 0 0 2px rgba(255, 255, 255, 0.4),
+			0 10px 30px rgba(0, 0, 0, 0.35);
+		transition: transform 0.25s ease;
+	}
+	.hero-avatar:hover {
+		transform: scale(1.04);
+	}
+	:root[data-theme='light'] .hero-avatar {
+		box-shadow:
+			0 0 0 2px rgba(0, 0, 0, 0.12),
+			0 10px 30px rgba(0, 0, 0, 0.2);
 	}
 
 	/* === Papers === */
-	.intro {
-		margin: 0.25rem 0 0 0;
-		opacity: 0.75;
-	}
 	.papers {
 		list-style: none;
 		padding: 0;
 		margin: 1.25rem 0 0 0;
 	}
+	/* Rows bleed to the card edges so their hairlines and hover washes span
+	   the full panel width; --card-pad-x comes from .card in global.css. */
 	.paper {
 		display: grid;
 		grid-template-columns: 3rem 1fr;
 		gap: 1rem;
-		padding: 0.8rem 0;
-		border-top: 1px solid rgba(255, 255, 255, 0.25);
+		margin-inline: calc(-1 * var(--card-pad-x));
+		padding: 0.8rem var(--card-pad-x);
+		border-top: 1px solid var(--hairline);
+		transition: background-color 0.2s ease;
 	}
-	.paper:last-child {
-		border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+	.paper:hover {
+		background-color: var(--row-hover);
 	}
 	.year {
 		font-size: 0.85rem;
@@ -313,12 +312,15 @@ const contributions = [
 		font-weight: 700;
 		font-size: 1rem;
 		line-height: 1.4;
+		text-wrap: balance;
 		color: var(--link);
 		text-decoration: none;
 	}
 	.title:hover,
 	.title:focus-visible {
 		text-decoration: underline;
+		text-underline-offset: 3px;
+		text-decoration-thickness: 1.5px;
 	}
 	.authors {
 		display: block;
@@ -348,11 +350,13 @@ const contributions = [
 		display: grid;
 		grid-template-columns: 3rem 1fr;
 		gap: 1rem;
-		padding: 0.8rem 0;
-		border-top: 1px solid rgba(255, 255, 255, 0.25);
+		margin-inline: calc(-1 * var(--card-pad-x));
+		padding: 0.8rem var(--card-pad-x);
+		border-top: 1px solid var(--hairline);
+		transition: background-color 0.2s ease;
 	}
-	.item:last-child {
-		border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+	.item:hover {
+		background-color: var(--row-hover);
 	}
 	.date {
 		font-size: 0.85rem;
@@ -397,6 +401,9 @@ const contributions = [
 	}
 
 	@media (max-width: 32rem) {
+		.hero-avatar {
+			width: 120px;
+		}
 		.paper,
 		.item {
 			grid-template-columns: 1fr;
