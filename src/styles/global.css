@@ -25,7 +25,7 @@ body {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
-	font-size: 22px;
+	font-size: 19.8px;
 	line-height: 1.7;
 }
 main {
@@ -114,7 +114,7 @@ hr {
 }
 @media (max-width: 720px) {
 	body {
-		font-size: 20px;
+		font-size: 18px;
 	}
 	main {
 		padding: 1em;
@@ -188,15 +188,50 @@ body::before {
 }
 html {
 	overflow-x: hidden;
-	font-size: 16px;
+	/* 0.9 × the 16px browser default, scaling every rem size on the site. */
+	font-size: 14.4px;
 	scrollbar-width: thin;
 	scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
-	/* Painted only in the rubber-band overscroll region past the page edges
-	   (the visible scene is the fixed body gradient). The same base gradient
-	   as the body, so the band above the top edge continues the page's
-	   lighter top color and the band below the bottom edge its darker bottom
-	   color; a flat middle color mismatched both. */
-	background: linear-gradient(165deg, rgb(63, 7, 51) 0%, var(--magenta) 42%, rgb(28, 1, 25) 100%);
+	/* Browsers paint the rubber-band overscroll area with the document's
+	   solid background-color only — gradients and other background images
+	   are ignored there — so the final color in this shorthand is what the
+	   bounce band actually shows. The scene's base magenta sits between the
+	   light top edge and dark bottom edge, so it reads as a continuation of
+	   both. The gradient layer is a fallback for anything else that might
+	   peek through. */
+	background: linear-gradient(165deg, rgb(63, 7, 51) 0%, var(--magenta) 42%, rgb(28, 1, 25) 100%) var(--magenta);
+}
+/* Rubber-band bounce bands. During elastic overscroll the browser bounces
+   the whole painted layer (fixed backgrounds included), exposing unpainted
+   canvas past the page edges. These viewport-sized fixed strips sit just
+   above and just below the viewport; they bounce with the page and slide in
+   to fill the gap. Each continues the scene at that edge: the strips' glow
+   radials share the body layers' absolute centers (85% -10vh and -10% 115vh
+   of the viewport), so the glows run through the seam unbroken. */
+html::before,
+html::after {
+	content: '';
+	position: fixed;
+	left: 0;
+	right: 0;
+	height: 100vh;
+	z-index: 0;
+}
+html::before {
+	bottom: 100%;
+	background:
+		radial-gradient(1100px 800px at 85% calc(100% - 10vh), rgba(255, 122, 216, 0.16), transparent 62%),
+		rgb(63, 7, 51);
+}
+html::after {
+	top: 100%;
+	background:
+		radial-gradient(1200px 900px at -10% 15vh, rgba(28, 0, 70, 0.6), transparent 60%),
+		rgb(28, 1, 25);
+}
+:root[data-theme='light']::before,
+:root[data-theme='light']::after {
+	background: #fff;
 }
 :root[data-theme='light'] {
 	scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
@@ -293,8 +328,8 @@ body.home .side-rail {
 		transform 0.15s ease;
 }
 .shader-footer svg {
-	width: 36px;
-	height: 36px;
+	width: 32px;
+	height: 32px;
 }
 .shader-footer a:hover {
 	color: var(--ink-strong);
@@ -307,8 +342,8 @@ body.home .side-rail {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 52px;
-	height: 52px;
+	width: 47px;
+	height: 47px;
 	padding: 0;
 	cursor: pointer;
 	color: rgba(255, 255, 255, 0.8);
@@ -324,8 +359,8 @@ body.home .side-rail {
 	transform: translateY(-2px);
 }
 .theme-toggle svg {
-	width: 26px;
-	height: 26px;
+	width: 23px;
+	height: 23px;
 }
 /* Dark shows the sun (click for light); light shows the moon. */
 .theme-toggle .icon-moon {
@@ -349,7 +384,7 @@ body.home .side-rail {
 	/* Fill the wrap's content box (its padding supplies the page margin);
 	   a vw-based width here would add to that padding and overflow. */
 	width: 100%;
-	max-width: 1100px;
+	max-width: 990px;
 	/* Elevated translucent panel: light border, inset top highlight, and a
 	   drop shadow lift the content off the page. */
 	background: rgba(255, 255, 255, 0.045);
@@ -498,8 +533,8 @@ html {
 		margin: 0 0 1rem;
 	}
 	.theme-toggle {
-		width: 46px;
-		height: 46px;
+		width: 41px;
+		height: 41px;
 	}
 	.shader-footer {
 		flex-direction: row;
@@ -529,8 +564,8 @@ html {
 		gap: 1rem;
 	}
 	.shader-footer svg {
-		width: 30px;
-		height: 30px;
+		width: 27px;
+		height: 27px;
 	}
 }
 
