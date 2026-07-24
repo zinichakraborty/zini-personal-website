@@ -146,7 +146,7 @@ hr {
   the Bear Blog rules above so these rules win.
  */
 :root {
-	--magenta: rgb(79, 2, 64);
+	--magenta: rgb(51, 1, 42);
 	--ink: rgba(255, 255, 255, 0.87);
 	--ink-strong: rgba(255, 255, 255, 0.96);
 	--link: hsl(320, 100%, 78%);
@@ -167,7 +167,7 @@ body {
 	background:
 		radial-gradient(1100px 800px at 85% -10%, rgba(255, 122, 216, 0.16), transparent 62%),
 		radial-gradient(1200px 900px at -10% 115%, rgba(28, 0, 70, 0.6), transparent 60%),
-		linear-gradient(165deg, rgb(97, 10, 79) 0%, var(--magenta) 42%, rgb(43, 1, 38) 100%);
+		linear-gradient(165deg, rgb(63, 7, 51) 0%, var(--magenta) 42%, rgb(28, 1, 25) 100%);
 	background-attachment: fixed;
 	color: var(--ink);
 	min-height: 100vh;
@@ -191,8 +191,14 @@ html {
 	font-size: 16px;
 	scrollbar-width: thin;
 	scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+	/* Painted only in the rubber-band overscroll region past the page edges
+	   (the visible scene is the fixed body gradient). The same base gradient
+	   as the body, so the band above the top edge continues the page's
+	   lighter top color and the band below the bottom edge its darker bottom
+	   color; a flat middle color mismatched both. */
+	background: linear-gradient(165deg, rgb(63, 7, 51) 0%, var(--magenta) 42%, rgb(28, 1, 25) 100%);
 }
-:root[data-theme='light'] html {
+:root[data-theme='light'] {
 	scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
 }
 
@@ -217,14 +223,17 @@ html {
    on wide screens the page assigns sections to a second column on the right. */
 .card-wrap.page-stack {
 	display: grid;
-	grid-template-columns: minmax(0, 38rem);
+	grid-template-columns: minmax(0, 42rem);
 	justify-content: center;
 	align-items: start;
 	gap: 1.25rem 2.5rem;
 }
-@media (min-width: 73.01rem) {
+/* Two columns once the 42rem bio + 34rem right column + 2.5rem gap and
+   the icon rail's zone beside them all fit (87rem); below that the cards
+   stack in a single centered column. */
+@media (min-width: 87rem) {
 	.card-wrap.page-stack {
-		grid-template-columns: minmax(0, 38rem) minmax(0, 38rem);
+		grid-template-columns: minmax(0, 42rem) minmax(0, 34rem);
 		/* The tall bio card spans both rows; pinning row 1 to its content
 		   height and letting row 2 absorb the slack keeps the vertical gap
 		   between the right-column cards equal to the horizontal one. */
@@ -235,23 +244,46 @@ html {
 .card-wrap.page-stack .card {
 	width: 100%;
 	min-width: 0;
-	max-width: 38rem;
+	max-width: 42rem;
 }
 
-/* In-flow header strip: as a flex child of <body> pulled above <main> via
-   order, the pill can never overlap the content at any viewport width. */
-.shader-footer {
-	align-self: flex-end;
-	order: -1;
+/* Side rail: the theme toggle stacked directly above the vertical icon rail,
+   pinned to the top of the document (absolute, so it scrolls away with the
+   page instead of floating over the content). */
+.side-rail {
+	position: absolute;
+	top: 1.5rem;
+	right: 0.75rem;
+	z-index: 20;
 	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.75rem;
+}
+/* On the single-page home the rail keeps a constant gap to the right of
+   the centered content instead of sticking to the viewport edge: 1.25rem
+   beside the 42rem card in single-column layout, and 1rem beside the
+   78.5rem two-column grid (42rem + 2.5rem gap + 34rem) above 87rem. */
+body.home .side-rail {
+	right: auto;
+	left: calc(50% + 22.25rem);
+}
+@media (min-width: 87rem) {
+	body.home .side-rail {
+		left: calc(50% + 40.25rem);
+	}
+}
+.shader-footer {
+	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	gap: 1.25rem;
-	margin: 1rem 1.5rem 0 0;
+	margin: 0;
 	background: rgba(255, 255, 255, 0.07);
 	border: 1px solid rgba(255, 255, 255, 0.13);
 	border-radius: 999px;
-	padding: 0.4rem 0.9rem;
+	padding: 0.9rem 0.4rem;
 }
 .shader-footer a {
 	display: inline-flex;
@@ -269,10 +301,54 @@ html {
 	transform: translateY(-2px);
 }
 
+/* Theme toggle: a circular counterpart to the icon rail, stacked above it
+   inside .side-rail. */
+.theme-toggle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 52px;
+	height: 52px;
+	padding: 0;
+	cursor: pointer;
+	color: rgba(255, 255, 255, 0.8);
+	background: rgba(255, 255, 255, 0.07);
+	border: 1px solid rgba(255, 255, 255, 0.13);
+	border-radius: 999px;
+	transition:
+		color 0.15s,
+		transform 0.15s ease;
+}
+.theme-toggle:hover {
+	color: var(--ink-strong);
+	transform: translateY(-2px);
+}
+.theme-toggle svg {
+	width: 26px;
+	height: 26px;
+}
+/* Dark shows the sun (click for light); light shows the moon. */
+.theme-toggle .icon-moon {
+	display: none;
+}
+:root[data-theme='light'] .theme-toggle .icon-moon {
+	display: block;
+}
+:root[data-theme='light'] .theme-toggle .icon-sun {
+	display: none;
+}
+:root[data-theme='light'] .theme-toggle {
+	color: hsl(220, 100%, 70%);
+	background: rgba(0, 0, 0, 0.05);
+	border-color: rgba(0, 0, 0, 0.12);
+}
+
 .card {
 	--card-pad-x: 2rem;
 	box-sizing: border-box;
-	width: 94vw;
+	/* Fill the wrap's content box (its padding supplies the page margin);
+	   a vw-based width here would add to that padding and overflow. */
+	width: 100%;
 	max-width: 1100px;
 	/* Elevated translucent panel: light border, inset top highlight, and a
 	   drop shadow lift the content off the page. */
@@ -369,12 +445,15 @@ html {
 	color: transparent;
 }
 .card .hero-tagline {
-	font-size: 1.25rem;
+	font-size: 1.1rem;
 	margin-bottom: 0;
 }
 /* === Light mode: flip black surfaces to white + dark text === */
-:root[data-theme='light'] body {
+:root[data-theme='light'] {
 	background: #fff;
+}
+:root[data-theme='light'] body {
+	background: none;
 }
 :root[data-theme='light'] .card {
 	background: #fff;
@@ -409,6 +488,25 @@ html {
 	color: #fff;
 }
 
+/* Below 51rem there isn't room beside the card for the rail, so the whole
+   side rail moves in-flow below the content: the toggle centered above the
+   links, which become a horizontal strip. */
+@media (max-width: 51rem) {
+	.side-rail {
+		position: static;
+		align-self: center;
+		margin: 0 0 1rem;
+	}
+	.theme-toggle {
+		width: 46px;
+		height: 46px;
+	}
+	.shader-footer {
+		flex-direction: row;
+		padding: 0.4rem 0.9rem;
+	}
+}
+
 @media (max-width: 720px) {
 	.card-wrap {
 		padding: 1.5rem 1rem;
@@ -419,12 +517,6 @@ html {
 	}
 	.card .hero-name {
 		white-space: normal;
-	}
-	/* On small screens the links move to a centered strip below the content. */
-	.shader-footer {
-		align-self: center;
-		order: 0;
-		margin: 0 0 1rem;
 	}
 }
 
@@ -495,21 +587,5 @@ html {
 @media (prefers-reduced-motion: reduce) {
 	.card {
 		animation: none;
-	}
-}
-
-/* Slide section cards in/out as they scroll into and out of view. */
-@media (prefers-reduced-motion: no-preference) {
-	.card.section.reveal {
-		animation: none;
-		opacity: 0;
-		transform: translateY(48px);
-		transition:
-			opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-			transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-	}
-	.card.section.reveal.in-view {
-		opacity: 1;
-		transform: translateY(0);
 	}
 }

@@ -19,7 +19,7 @@ const { title, description, centered = false, bare = false } = Astro.props;
 	<head>
 		<BaseHead title={title} description={description} />
 	</head>
-	<body>
+	<body class:list={[{ home: bare }]}>
 		{
 			bare ? (
 				<main class="card-wrap page-stack">
@@ -34,6 +34,20 @@ const { title, description, centered = false, bare = false } = Astro.props;
 				</main>
 			)
 		}
+
+		<div class="side-rail">
+			<button class="theme-toggle" type="button" aria-label="Switch color theme" title="Switch color theme">
+			<svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+				stroke-width="2" stroke-linecap="round"
+				><circle cx="12" cy="12" r="4" /><path
+					d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+				/></svg
+			>
+			<svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+				stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+				><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg
+			>
+		</button>
 
 		<footer class="shader-footer">
 			<a href={SOCIALS.github} target="_blank" rel="noopener noreferrer">
@@ -82,23 +96,17 @@ const { title, description, centered = false, bare = false } = Astro.props;
 				>
 			</a>
 		</footer>
+		</div>
 
 		<script>
-			// Slide sections in/out as they enter and leave the viewport.
-			const sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
-
-			if (sections.length) {
-				sections.forEach((section) => section.classList.add('reveal'));
-				const revealObserver = new IntersectionObserver(
-					(entries) => {
-						entries.forEach((entry) => {
-							entry.target.classList.toggle('in-view', entry.isIntersecting);
-						});
-					},
-					{ threshold: 0.15 },
-				);
-				sections.forEach((section) => revealObserver.observe(section));
-			}
+			// Flip between the default (dark) theme and light, persisting the
+			// choice the same way BaseHead reads it on the next navigation.
+			document.querySelector('.theme-toggle')?.addEventListener('click', () => {
+				const light = document.documentElement.dataset.theme !== 'light';
+				if (light) document.documentElement.dataset.theme = 'light';
+				else delete document.documentElement.dataset.theme;
+				localStorage.setItem('theme', light ? 'light' : '');
+			});
 		</script>
 	</body>
 </html>

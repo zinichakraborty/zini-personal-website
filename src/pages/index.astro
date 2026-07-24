@@ -7,7 +7,7 @@ const papers = [
 	{
 		title: 'Where Does Social Reasoning Come From? Capability Provenance in Language Models',
 		authors: 'G Matlin, C Chakraborty, S Eom, M Okamoto, R Castilla, et al.',
-		venue: 'arXiv preprint',
+		venue: 'Conference on Language Modeling (COLM)',
 		year: 2026,
 		coFirst: false,
 		link: 'https://arxiv.org/abs/2606.19625',
@@ -87,15 +87,19 @@ const contributions = [
 
 <Hero title={SITE_TITLE} description={SITE_DESCRIPTION} bare>
 	<section id="home" class="card section section-home">
-		<img
-			class="hero-avatar"
-			src="/profilepic.png"
-			alt="Chandreyi (Zini) Chakraborty"
-			width="860"
-			height="780"
-		/>
-		<h1 class="hero-name">Hi, I'm Chandreyi (Zini) Chakraborty</h1>
-		<p class="hero-fact">BS/MS CS @ Georgia Tech &nbsp;|&nbsp; AI Interpretability Research</p>
+		<div class="hero-head">
+			<div class="hero-head-text">
+				<h1 class="hero-name">Hi, I'm Chandreyi (Zini) Chakraborty</h1>
+				<p class="hero-fact">BS/MS CS @ Georgia Tech &nbsp;|&nbsp; AI Interpretability Research</p>
+			</div>
+			<img
+				class="hero-avatar"
+				src="/profilepic.png"
+				alt="Chandreyi (Zini) Chakraborty"
+				width="860"
+				height="780"
+			/>
+		</div>
 		<p class="hero-tagline">
 			I earned my Masters and Bachelors in Computer Science from
 			<a href="https://www.gatech.edu" target="_blank" rel="noopener noreferrer">Georgia Tech</a>,
@@ -179,7 +183,7 @@ const contributions = [
 	</section>
 
 	<section id="contributions" class="card section">
-		<h2 class="section-title">Open-Source Contributions</h2>
+		<h2 class="section-title">Contributions</h2>
 		<ul class="news">
 			{
 				contributions.map((item) => (
@@ -213,8 +217,9 @@ const contributions = [
 <style>
 	/* On wide screens the bio fills the left column while Publications and
 	   Contributions stack in the right column (grid defined in global.css);
-	   each section renders as its own elevated card. */
-	@media (min-width: 73.01rem) {
+	   each section renders as its own elevated card. Breakpoint matches
+	   global.css: two columns plus the icon rail's zone fit at 87rem. */
+	@media (min-width: 87rem) {
 		#home {
 			grid-column: 1;
 			grid-row: 1 / span 2;
@@ -229,6 +234,17 @@ const contributions = [
 		}
 	}
 
+	/* Publications and Contributions render narrower than the bio card,
+	   but only in the two-column layout; stacked in a single column all
+	   cards share the same width. */
+	@media (min-width: 87rem) {
+		#publications,
+		#contributions {
+			max-width: 34rem;
+			justify-self: center;
+		}
+	}
+
 	/* === Section headings === */
 	.section-title {
 		font-size: 1.35rem;
@@ -240,17 +256,32 @@ const contributions = [
 	}
 
 	/* === Home hero === */
-	/* Contain the floated avatar within the hero. */
-	.section-home::after {
-		content: '';
-		display: block;
-		clear: both;
+	/* Name + credential line on the left, photo on the right. The row never
+	   wraps, so the photo always stays beside the text; the text column
+	   shrinks instead (the credential line wraps below 40rem), and on wide
+	   cards it never gets narrower than the nowrap line. */
+	.hero-head {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem 1rem;
+		margin-bottom: 0.85rem;
+	}
+	.hero-head-text {
+		flex: 1 1 0;
+		/* Measured width of the nowrap credential line (~399px), so the
+		   line can never be squeezed or slide under the photo; relaxed
+		   below 40rem where the line wraps instead. */
+		min-width: 25rem;
 	}
 	.hero-fact {
-		margin: 0 0 0.85rem;
+		margin: 0;
 		font-size: 0.95rem;
 		letter-spacing: 0.01em;
 		color: rgba(255, 255, 255, 0.7);
+		white-space: nowrap;
+	}
+	:root[data-theme='light'] .hero-fact {
+		color: rgba(0, 0, 0, 0.6);
 	}
 	.hero-tagline a {
 		color: var(--link);
@@ -267,16 +298,14 @@ const contributions = [
 		color: var(--link-hover);
 		text-decoration-color: var(--link-hover);
 	}
-	/* Circular avatar with a bright ring, floated to the top-right of the
-	   intro text. */
+	/* Rounded-rectangle portrait with a bright ring, beside the name. */
 	.hero-avatar {
-		float: right;
-		width: 150px;
+		flex: 0 0 auto;
+		width: 120px;
 		height: auto;
-		margin: 0 0 0.75rem 1.25rem;
-		aspect-ratio: 1;
+		aspect-ratio: 4 / 5;
 		object-fit: cover;
-		border-radius: 50%;
+		border-radius: 16px;
 		box-shadow:
 			0 0 0 2px rgba(255, 255, 255, 0.4),
 			0 10px 30px rgba(0, 0, 0, 0.35);
@@ -301,8 +330,8 @@ const contributions = [
 	   the full panel width; --card-pad-x comes from .card in global.css. */
 	.paper {
 		display: grid;
-		grid-template-columns: 3rem 1fr;
-		gap: 1rem;
+		grid-template-columns: 1fr;
+		gap: 0.3rem;
 		margin-inline: calc(-1 * var(--card-pad-x));
 		padding: 0.8rem var(--card-pad-x);
 		border-top: 1px solid var(--hairline);
@@ -315,7 +344,6 @@ const contributions = [
 		font-size: 0.85rem;
 		font-variant-numeric: tabular-nums;
 		opacity: 0.6;
-		padding-top: 0.2rem;
 		white-space: nowrap;
 	}
 	.content {
@@ -324,7 +352,7 @@ const contributions = [
 	.title {
 		display: block;
 		font-weight: 700;
-		font-size: 1rem;
+		font-size: 1.1rem;
 		line-height: 1.4;
 		text-wrap: balance;
 		color: var(--link);
@@ -414,16 +442,25 @@ const contributions = [
 		text-decoration: underline;
 	}
 
+	/* Below 40rem the credential line wraps so the photo can stay beside
+	   the text rather than dropping under it. */
+	@media (max-width: 40rem) {
+		.hero-fact {
+			white-space: normal;
+		}
+		.hero-head-text {
+			min-width: 0;
+		}
+	}
+
 	@media (max-width: 32rem) {
 		.hero-avatar {
-			width: 120px;
+			width: 90px;
 		}
-		.paper,
 		.item {
 			grid-template-columns: 1fr;
 			gap: 0.3rem;
 		}
-		.year,
 		.date {
 			padding-top: 0;
 		}
