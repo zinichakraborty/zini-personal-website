@@ -233,8 +233,8 @@ const contributions = [
 	/* On wide screens the bio fills the left column while Publications and
 	   Contributions stack in the right column (grid defined in global.css);
 	   each section renders as its own elevated card. Breakpoint matches
-	   global.css: two columns plus the icon rail's zone fit at 87rem. */
-	@media (min-width: 87rem) {
+	   global.css: two columns plus the icon rail's zone fit at 80rem. */
+	@media (min-width: 80rem) {
 		#home {
 			grid-column: 1;
 			grid-row: 1 / span 2;
@@ -252,10 +252,10 @@ const contributions = [
 	/* Publications and Contributions render narrower than the bio card,
 	   but only in the two-column layout; stacked in a single column all
 	   cards share the same width. */
-	@media (min-width: 87rem) {
+	@media (min-width: 80rem) {
 		#publications,
 		#contributions {
-			max-width: 34rem;
+			max-width: 30rem;
 			justify-self: center;
 		}
 	}

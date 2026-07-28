@@ -263,12 +263,12 @@ html::after {
 	align-items: start;
 	gap: 1.25rem 2.5rem;
 }
-/* Two columns once the 42rem bio + 34rem right column + 2.5rem gap and
-   the icon rail's zone beside them all fit (87rem); below that the cards
+/* Two columns once the 39rem bio + 30rem right column + 2.5rem gap and
+   the icon rail's zone beside them all fit (80rem); below that the cards
    stack in a single centered column. */
-@media (min-width: 87rem) {
+@media (min-width: 80rem) {
 	.card-wrap.page-stack {
-		grid-template-columns: minmax(0, 42rem) minmax(0, 34rem);
+		grid-template-columns: minmax(0, 39rem) minmax(0, 30rem);
 		/* The tall bio card spans both rows; pinning row 1 to its content
 		   height and letting row 2 absorb the slack keeps the vertical gap
 		   between the right-column cards equal to the horizontal one. */
@@ -298,14 +298,14 @@ html::after {
 /* On the single-page home the rail keeps a constant gap to the right of
    the centered content instead of sticking to the viewport edge: 1.25rem
    beside the 42rem card in single-column layout, and 1rem beside the
-   78.5rem two-column grid (42rem + 2.5rem gap + 34rem) above 87rem. */
+   71.5rem two-column grid (39rem + 2.5rem gap + 30rem) above 80rem. */
 body.home .side-rail {
 	right: auto;
 	left: calc(50% + 22.25rem);
 }
-@media (min-width: 87rem) {
+@media (min-width: 80rem) {
 	body.home .side-rail {
-		left: calc(50% + 40.25rem);
+		left: calc(50% + 36.75rem);
 	}
 }
 .shader-footer {
