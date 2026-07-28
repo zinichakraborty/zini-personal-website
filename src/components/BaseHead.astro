@@ -11,6 +11,8 @@ interface Props {
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+// Preview image for social/link embeds (og:image, twitter:image).
+const ogImage = new URL('/profilepic.png', Astro.site);
 
 const { title, description } = Astro.props;
 ---
@@ -50,9 +52,11 @@ const { title, description } = Astro.props;
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary" />
 <meta property="twitter:url" content={Astro.url} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={ogImage} />

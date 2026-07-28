@@ -12,6 +12,8 @@ const papers = [
 		year: 2026,
 		coFirst: false,
 		link: 'https://arxiv.org/abs/2606.19625',
+		website: 'https://eilab.gatech.edu/capabilibara/',
+		github: 'https://github.com/eilab-gt/capabilibara',
 		workshops:
 			'Also at COLM workshops: <a href="https://science-ai-2026.github.io/" target="_blank" rel="noopener">Sci-FM</a> and <a href="https://sites.google.com/view/social-sims-with-llms/" target="_blank" rel="noopener">Social Sim\'26</a>',
 	},
@@ -22,6 +24,7 @@ const papers = [
 		year: 2026,
 		coFirst: true,
 		link: 'https://arxiv.org/abs/2604.20079',
+		github: 'https://github.com/zinichakraborty/Diffusion-LLM-Quantization-Robustness',
 	},
 	{
 		title: 'Do Language Models Agree with Human Perceptions of Suspense in Stories?',
@@ -31,6 +34,7 @@ const papers = [
 		year: 2025,
 		coFirst: false,
 		link: 'https://arxiv.org/abs/2508.15794',
+		github: 'https://github.com/eilab-gt/SuspensePerception',
 	},
 	{
 		title: 'Diffusion Model for Generating Inorganic Materials with Targeted Density of States',
@@ -55,6 +59,10 @@ const formatAuthors = (paper) => {
 		`<strong>C Chakraborty${paper.coFirst ? '*' : ''}</strong>`,
 	);
 };
+
+// Short label for each paper's link chip.
+const paperLinkLabel = (url: string) =>
+	url.includes('arxiv.org') ? 'arXiv' : url.includes('gatech.edu') ? 'Repository' : 'View paper';
 
 // === Contributions ===
 const contributions = [
@@ -116,22 +124,12 @@ const contributions = [
 			<a href="https://arxiv.org/abs/2606.19625" target="_blank" rel="noopener noreferrer"
 				>paper accepted to COLM 2026</a
 			> that attributes social reasoning to training data at the corpus level, working with
-			<a href="https://www.eleuther.ai" target="_blank" rel="noopener noreferrer">EleutherAI</a>. We
-			launched a
-			<a
-				href="https://eilab.gatech.edu/capabilibara/"
-				target="_blank"
-				rel="noopener noreferrer">website</a
-			> showcasing this work.
-		</p>
-		<p class="hero-tagline">
-			I am a member of the
+			<a href="https://www.eleuther.ai" target="_blank" rel="noopener noreferrer">EleutherAI</a> as a member of the
 			<a href="https://eilab.gatech.edu" target="_blank" rel="noopener noreferrer"
 				>Entertainment Intelligence and Human-Centered AI Lab</a
 			> under
 			<a href="https://eilab.gatech.edu/mark-riedl.html" target="_blank" rel="noopener noreferrer"
-				>Dr. Mark Riedl</a
-			>, where I published on
+				>Dr. Mark Riedl</a>. I also published on
 			<a href="https://arxiv.org/abs/2508.15794" target="_blank" rel="noopener noreferrer"
 				>how LLMs understand suspense in stories (COLM 2025)</a
 			>.
@@ -144,7 +142,7 @@ const contributions = [
 			questions on EdStem using retrieval-augmented fine-tuning.
 		</p>
 		<p class="hero-tagline">
-			On the efficiency side, I co-first-authored a
+			On the efficiency side, I have worked with different LLM architectures and GPU configurations for optimal compute and accuracy. I co-first-authored a
 			<a href="https://arxiv.org/abs/2604.20079" target="_blank" rel="noopener noreferrer"
 				>paper on the quantization robustness of diffusion LLMs</a
 			> against autoregressive LLMs.
@@ -171,9 +169,7 @@ const contributions = [
 					<li class="paper">
 						<span class="year">{paper.year}</span>
 						<div class="content">
-							<a class="title" href={paper.link} target="_blank" rel="noopener">
-								{paper.title}
-							</a>
+							<span class="title" title={paper.title}>{paper.title}</span>
 							<span class="authors" set:html={formatAuthors(paper)} />
 							<span class="venue">
 								<em>
@@ -190,6 +186,46 @@ const contributions = [
 								{paper.coFirst && <span class="cofirst">*Equal contribution</span>}
 							</span>
 							{paper.workshops && <span class="workshops" set:html={paper.workshops} />}
+							<a class="paper-link" href={paper.link} target="_blank" rel="noopener">
+								{paper.link.includes('arxiv.org') ? (
+									<svg viewBox="0 0 24 24" aria-hidden="true">
+										<path
+											fill="currentColor"
+											d="M3.8423 0a1.0037 1.0037 0 0 0-.922.6078c-.1536.3687-.0438.6275.2938 1.1113l6.9185 8.3597-1.0223 1.1058a1.0393 1.0393 0 0 0 .003 1.4229l1.2292 1.3135-5.4391 6.4444c-.2803.299-.4538.823-.2971 1.1986a1.0253 1.0253 0 0 0 .9585.635.9133.9133 0 0 0 .6891-.3405l5.783-6.126 7.4902 8.0051a.8527.8527 0 0 0 .6835.2597.9575.9575 0 0 0 .8777-.6138c.1577-.377-.017-.7502-.306-1.1407l-7.0518-8.3418 1.0632-1.13a.9626.9626 0 0 0 .0089-1.3165L4.6336.4639s-.3733-.4535-.768-.463zm0 .272h.0166c.2179.0052.4874.2715.5644.3639l.005.006.0052.0055 10.169 10.9905a.6915.6915 0 0 1-.0072.945l-1.0666 1.133-1.4982-1.7724-8.5994-10.39c-.3286-.472-.352-.6183-.2592-.841a.7307.7307 0 0 1 .6704-.4401Zm14.341 1.5701a.877.877 0 0 0-.6554.2418l-5.6962 6.1584 1.6944 1.8319 5.3089-6.5138c.3251-.4335.479-.6603.3247-1.0292a1.1205 1.1205 0 0 0-.9763-.689zm-7.6557 12.2823 1.3186 1.4135-5.7864 6.1295a.6494.6494 0 0 1-.4959.26.7516.7516 0 0 1-.706-.4669c-.1119-.2682.0359-.6864.2442-.9083l.0051-.0055.0047-.0055z"
+										/>
+									</svg>
+								) : (
+									<svg viewBox="0 0 16 16" aria-hidden="true">
+										<path
+											fill="currentColor"
+											d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"
+										/>
+									</svg>
+								)}
+								{paperLinkLabel(paper.link)}
+							</a>
+							{paper.github && (
+								<a class="paper-link" href={paper.github} target="_blank" rel="noopener">
+									<svg viewBox="0 0 16 16" aria-hidden="true">
+										<path
+											fill="currentColor"
+											d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+										/>
+									</svg>
+									GitHub
+								</a>
+							)}
+							{paper.website && (
+								<a class="paper-link" href={paper.website} target="_blank" rel="noopener">
+									<svg viewBox="0 0 24 24" aria-hidden="true">
+										<path
+											fill="currentColor"
+											d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"
+										/>
+									</svg>
+									Website
+								</a>
+							)}
 						</div>
 					</li>
 				))
@@ -218,7 +254,13 @@ const contributions = [
 							<p class="body">{item.body}</p>
 							{item.link && (
 								<a class="item-link" href={item.link} target="_blank" rel="noopener">
-									View on GitHub
+									<svg viewBox="0 0 16 16" aria-hidden="true">
+										<path
+											fill="currentColor"
+											d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+										/>
+									</svg>
+									GitHub
 								</a>
 							)}
 						</div>
@@ -233,7 +275,7 @@ const contributions = [
 	/* On wide screens the bio fills the left column while Publications and
 	   Contributions stack in the right column (grid defined in global.css);
 	   each section renders as its own elevated card. Breakpoint matches
-	   global.css: two columns plus the icon rail's zone fit at 80rem. */
+	   global.css: the two columns fit at 80rem. */
 	@media (min-width: 80rem) {
 		#home {
 			grid-column: 1;
@@ -255,7 +297,7 @@ const contributions = [
 	@media (min-width: 80rem) {
 		#publications,
 		#contributions {
-			max-width: 30rem;
+			max-width: 34rem;
 			justify-self: center;
 		}
 	}
@@ -345,8 +387,9 @@ const contributions = [
 	   the full panel width; --card-pad-x comes from .card in global.css. */
 	.paper {
 		display: grid;
-		grid-template-columns: 1fr;
-		gap: 0.3rem;
+		/* Year in a fixed left column, matching the contribution rows below. */
+		grid-template-columns: 3rem 1fr;
+		gap: 0.3rem 1rem;
 		margin-inline: calc(-1 * var(--card-pad-x));
 		padding: 0.8rem var(--card-pad-x);
 		border-top: 1px solid var(--hairline);
@@ -358,6 +401,8 @@ const contributions = [
 	.year {
 		font-size: 0.85rem;
 		font-variant-numeric: tabular-nums;
+		/* Nudged down to sit on the title's baseline rather than its cap. */
+		padding-top: 0.3rem;
 		opacity: 0.6;
 		white-space: nowrap;
 	}
@@ -365,19 +410,17 @@ const contributions = [
 		min-width: 0;
 	}
 	.title {
-		display: block;
 		font-weight: 700;
 		font-size: 1.1rem;
 		line-height: 1.4;
-		text-wrap: balance;
+		/* Accent-colored heading text (not a link — the chip carries that). */
 		color: var(--link);
-		text-decoration: none;
-	}
-	.title:hover,
-	.title:focus-visible {
-		text-decoration: underline;
-		text-underline-offset: 3px;
-		text-decoration-thickness: 1.5px;
+		/* Clamp long titles to two lines; the full title is in the tooltip. */
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+		overflow: hidden;
 	}
 	.authors {
 		display: block;
@@ -409,10 +452,15 @@ const contributions = [
 		opacity: 0.7;
 	}
 	.workshops :global(a) {
-		color: var(--link);
+		color: inherit;
+		font-style: italic;
 		text-decoration: underline;
 		text-underline-offset: 3px;
 		text-decoration-thickness: 1px;
+	}
+	.workshops :global(a):hover {
+		color: inherit;
+		text-decoration-thickness: 1.5px;
 	}
 
 	/* === Contributions === */
@@ -461,18 +509,50 @@ const contributions = [
 		font-size: 0.92rem;
 		line-height: 1.55;
 	}
-	.item-link {
+	/* Pill chip matching the side rail's translucent style: light border and
+	   wash over the card, lifting slightly on hover. Shared by the GitHub
+	   links (contributions) and the paper links (publications). */
+	:is(.item-link, .paper-link) {
 		display: inline-flex;
 		align-items: center;
-		margin-top: 0.5rem;
+		gap: 0.4rem;
+		margin-top: 0.55rem;
+		padding: 0.28rem 0.75rem;
 		font-size: 0.8rem;
-		color: var(--link);
-		text-decoration: none;
 		font-weight: 600;
 		white-space: nowrap;
+		color: var(--link);
+		text-decoration: none;
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		border-radius: 999px;
+		transition:
+			color 0.18s ease,
+			background-color 0.18s ease,
+			border-color 0.18s ease,
+			transform 0.18s ease;
 	}
-	.item-link:hover {
-		text-decoration: underline;
+	:is(.item-link, .paper-link):hover {
+		color: var(--link-hover);
+		background: rgba(255, 255, 255, 0.11);
+		border-color: color-mix(in srgb, var(--link) 55%, transparent);
+		transform: translateY(-1px);
+	}
+	:is(.item-link, .paper-link) svg {
+		width: 0.95rem;
+		height: 0.95rem;
+		flex: 0 0 auto;
+	}
+	:global(:root[data-theme='light']) :is(.item-link, .paper-link) {
+		background: rgba(0, 0, 0, 0.04);
+		border-color: rgba(0, 0, 0, 0.14);
+	}
+	:global(:root[data-theme='light']) :is(.item-link, .paper-link):hover {
+		background: rgba(0, 0, 0, 0.08);
+	}
+	/* Second chip in a row (e.g. arXiv + Website) gets a small gap. */
+	.paper-link + .paper-link {
+		margin-left: 0.5rem;
 	}
 
 	/* Below 40rem the credential line wraps so the photo can stay beside
@@ -490,11 +570,13 @@ const contributions = [
 		.hero-avatar {
 			width: 81px;
 		}
-		.item {
+		.item,
+		.paper {
 			grid-template-columns: 1fr;
 			gap: 0.3rem;
 		}
-		.date {
+		.date,
+		.year {
 			padding-top: 0;
 		}
 	}
