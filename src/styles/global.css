@@ -149,7 +149,9 @@ hr {
 	--magenta: rgb(51, 1, 42);
 	--ink: rgba(255, 255, 255, 0.87);
 	--ink-strong: rgba(255, 255, 255, 0.96);
-	--link: hsl(320, 100%, 78%);
+	/* 80% lightness keeps links at >=4.5:1 (WCAG AA) even on the chip
+	   backgrounds in the lightest glow region of the page. */
+	--link: hsl(320, 100%, 80%);
 	--link-hover: hsl(320, 100%, 88%);
 	--hairline: rgba(255, 255, 255, 0.16);
 	--row-hover: rgba(255, 255, 255, 0.05);
@@ -233,7 +235,7 @@ html::after {
 }
 :root[data-theme='light']::before,
 :root[data-theme='light']::after {
-	background: #fff;
+	background: #f4ecdc;
 }
 :root[data-theme='light'] {
 	scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
@@ -492,15 +494,15 @@ html {
 	font-size: 1.1rem;
 	margin-bottom: 0;
 }
-/* === Light mode: flip black surfaces to white + dark text === */
+/* === Light mode: light tan page, white cards + dark text === */
 :root[data-theme='light'] {
-	background: #fff;
+	background: #f4ecdc;
 }
 :root[data-theme='light'] body {
 	background: none;
 }
 :root[data-theme='light'] .card {
-	background: #fff;
+	background: #fbf6ec;
 	color: #000;
 	border-color: rgba(0, 0, 0, 0.09);
 	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
