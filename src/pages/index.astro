@@ -14,6 +14,7 @@ const papers = [
 		link: 'https://arxiv.org/abs/2606.19625',
 		website: 'https://eilab.gatech.edu/capabilibara/',
 		github: 'https://github.com/eilab-gt/capabilibara',
+		huggingface: 'https://huggingface.co/spaces/HCAI-Lab/capabilibara',
 		workshops:
 			'Also at COLM workshops: <a href="https://science-ai-2026.github.io/" target="_blank" rel="noopener">Sci-FM</a> and <a href="https://sites.google.com/view/social-sims-with-llms/" target="_blank" rel="noopener">Social Sim\'26</a>',
 	},
@@ -91,7 +92,7 @@ const contributions = [
 		date: '2026',
 		org: 'Pruna AI',
 		orgLink: 'https://github.com/PrunaAI/pruna',
-		body: 'Wrote a tutorial benchmarking Stable Diffusion optimizations on speed, energy use, CO2 emissions, and image quality.',
+		body: 'Wrote a tutorial benchmarking Stable Diffusion vision model optimizations on energy use, CO2, and image quality.',
 		link: 'https://github.com/PrunaAI/pruna/pull/711',
 	},
 ];
@@ -123,7 +124,7 @@ const contributions = [
 			I second-authored a
 			<a href="https://arxiv.org/abs/2606.19625" target="_blank" rel="noopener noreferrer"
 				>paper accepted to COLM 2026</a
-			> that attributes social reasoning to training data at the corpus level, working with
+			> that attributes social reasoning to training data at the corpus level using influence functions and machine unlearning, working with
 			<a href="https://www.eleuther.ai" target="_blank" rel="noopener noreferrer">EleutherAI</a> as a member of the
 			<a href="https://eilab.gatech.edu" target="_blank" rel="noopener noreferrer"
 				>Entertainment Intelligence and Human-Centered AI Lab</a
@@ -138,8 +139,13 @@ const contributions = [
 			I was a Machine Learning Teaching Assistant under
 			<a href="https://mahdi-roozbahani.github.io/" target="_blank" rel="noopener noreferrer"
 				>Dr. Mahdi Roozbahani</a
-			>, where I developed a Socratic LLM agent that supports TAs in responding to student
-			questions on EdStem using retrieval-augmented fine-tuning.
+			>, where I developed a
+			<a
+				href="https://huggingface.co/ML-GT/Llama-3.3-70B-Instruct-Edubuddy"
+				target="_blank"
+				rel="noopener noreferrer">Socratic LLM agent</a
+			> that supports TAs in responding to student questions on EdStem using LoRA
+			fine-tuning and dynamic RAG databases.
 		</p>
 		<p class="hero-tagline">
 			On the efficiency side, I have worked with different LLM architectures and GPU configurations for optimal compute and accuracy. I co-first-authored a
@@ -224,6 +230,18 @@ const contributions = [
 										/>
 									</svg>
 									Website
+								</a>
+							)}
+							{paper.huggingface && (
+								<a class="paper-link" href={paper.huggingface} target="_blank" rel="noopener">
+									<svg viewBox="0 0 24 24" aria-hidden="true">
+										<circle cx="12" cy="10.2" r="8" fill="currentColor" />
+										<path
+											fill="currentColor"
+											d="M3.4 16.2a1.05 1.05 0 0 1 2.1 0 1.05 1.05 0 0 1 2.1 0 1.05 1.05 0 0 1 2.1 0v3a1.8 1.8 0 0 1-1.8 1.8H5.2a1.8 1.8 0 0 1-1.8-1.8zm10.9 0a1.05 1.05 0 0 1 2.1 0 1.05 1.05 0 0 1 2.1 0 1.05 1.05 0 0 1 2.1 0v3a1.8 1.8 0 0 1-1.8 1.8h-2.7a1.8 1.8 0 0 1-1.8-1.8z"
+										/>
+									</svg>
+									HF
 								</a>
 							)}
 						</div>
