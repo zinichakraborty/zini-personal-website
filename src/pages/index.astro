@@ -37,14 +37,6 @@ const papers = [
 		link: 'https://arxiv.org/abs/2508.15794',
 		github: 'https://github.com/eilab-gt/SuspensePerception',
 	},
-	{
-		title: 'Diffusion Model for Generating Inorganic Materials with Targeted Density of States',
-		authors: 'C Chakraborty',
-		venue: 'Georgia Institute of Technology',
-		year: 2025,
-		coFirst: false,
-		link: 'https://repository.gatech.edu/entities/publication/ed62e6cb-43c1-445f-b9a5-5bd4b261ed89',
-	},
 ];
 
 // Mark co-first authors with * and bold the site owner's name.
@@ -99,6 +91,7 @@ const contributions = [
 ---
 
 <Hero title={SITE_TITLE} description={SITE_DESCRIPTION} bare>
+	<div class="col-left">
 	<section id="home" class="card section section-home">
 		<div class="hero-head">
 			<div class="hero-head-text">
@@ -167,8 +160,43 @@ const contributions = [
 		</p>
 	</section>
 
+	<section id="press" class="card section">
+		<h2 class="section-title">Press</h2>
+		<ul class="news">
+			<li class="item">
+				<span class="date">2026</span>
+				<div class="content">
+					<div class="org-row">
+						<a class="org" href="https://allenai.org" target="_blank" rel="noopener"
+							>Allen Institute for AI</a
+						>
+					</div>
+					<p class="body">
+						Featured on the Ai2 blog for using the fully open Olmo stack to trace which pre-training
+						data categories drive social reasoning in language models.
+					</p>
+					<a
+						class="item-link"
+						href="https://allenai.org/blog/olmo-capability-tracing"
+						target="_blank"
+						rel="noopener"
+					>
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path
+								fill="currentColor"
+								d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"
+							/>
+						</svg>
+						Read the post
+					</a>
+				</div>
+			</li>
+		</ul>
+	</section>
+	</div>
+
 	<section id="publications" class="card section">
-		<h2 class="section-title">Publications</h2>
+		<h2 class="section-title">Selected Publications</h2>
 		<ol class="papers">
 			{
 				papers.map((paper) => (
@@ -290,12 +318,22 @@ const contributions = [
 </Hero>
 
 <style>
-	/* On wide screens the bio fills the left column while Publications and
-	   Contributions stack in the right column (grid defined in global.css);
+	/* On wide screens the bio and Press fill the left column while Publications
+	   and Contributions stack in the right column (grid defined in global.css);
 	   each section renders as its own elevated card. Breakpoint matches
 	   global.css: the two columns fit at 80rem. */
+	/* Stacked layout: the wrapper dissolves so its cards sit directly in the
+	   page grid, keeping the single-column order Bio → Press → the rest. */
+	.col-left {
+		display: contents;
+	}
 	@media (min-width: 80rem) {
-		#home {
+		/* The left column stacks its own cards rather than occupying grid rows,
+		   so Press hugs the bio instead of being pushed down by row 2's 1fr. */
+		.col-left {
+			display: flex;
+			flex-direction: column;
+			gap: 2.5rem;
 			grid-column: 1;
 			grid-row: 1 / span 2;
 		}
