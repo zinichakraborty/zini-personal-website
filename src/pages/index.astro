@@ -94,10 +94,7 @@ const contributions = [
 	<div class="col-left">
 	<section id="home" class="card section section-home">
 		<div class="hero-head">
-			<div class="hero-head-text">
-				<h1 class="hero-name">Hi, I'm Chandreyi (Zini) Chakraborty</h1>
-				<p class="hero-fact">BS/MS CS @ Georgia Tech &nbsp;|&nbsp; AI Interpretability Research</p>
-			</div>
+			<h1 class="hero-name">Hi, I'm Chandreyi (Zini) Chakraborty</h1>
 			<img
 				class="hero-avatar"
 				src="/profilepic.png"
@@ -106,6 +103,10 @@ const contributions = [
 				height="780"
 			/>
 		</div>
+		<p class="hero-fact">
+			Infrastructure @ Affirm &nbsp;|&nbsp; MS/BS CS @ Georgia Tech &nbsp;|&nbsp; AI
+			Interp Research
+		</p>
 		<p class="hero-tagline">
 			I earned my Masters and Bachelors in Computer Science from
 			<a href="https://www.gatech.edu" target="_blank" rel="noopener noreferrer">Georgia Tech</a>,
@@ -147,7 +148,9 @@ const contributions = [
 			> against autoregressive LLMs.
 		</p>
 		<p class="hero-tagline">
-			Previously, I worked at
+			I am currently a software engineer at
+			<a href="https://www.affirm.com" target="_blank" rel="noopener noreferrer">Affirm</a> on an
+			infrastructure team. Previously, I worked at
 			<a
 				href="https://professional.bloomberg.com/products/bloomberg-terminal/"
 				target="_blank"
@@ -369,29 +372,24 @@ const contributions = [
 	}
 
 	/* === Home hero === */
-	/* Name + credential line on the left, photo on the right. The row never
-	   wraps, so the photo always stays beside the text; the text column
-	   shrinks instead (the credential line wraps below 40rem), and on wide
-	   cards it never gets narrower than the nowrap line. */
+	/* Name on the left, photo on the right; the credential line sits below
+	   the whole row, running full width under the photo. */
 	.hero-head {
 		display: flex;
 		align-items: flex-start;
 		gap: 0.75rem 1rem;
-		margin-bottom: 0.85rem;
+		margin-bottom: 0.5rem;
 	}
-	.hero-head-text {
+	.hero-head .hero-name {
 		flex: 1 1 0;
-		/* Measured width of the nowrap credential line (~399px), so the
-		   line can never be squeezed or slide under the photo; relaxed
-		   below 40rem where the line wraps instead. */
-		min-width: 25rem;
+		min-width: 0;
+		margin-bottom: 0;
 	}
 	.hero-fact {
-		margin: 0;
+		margin: 0 0 0.85rem;
 		font-size: 0.95rem;
 		letter-spacing: 0.01em;
 		color: rgba(255, 255, 255, 0.7);
-		white-space: nowrap;
 	}
 	:root[data-theme='light'] .hero-fact {
 		color: rgba(0, 0, 0, 0.6);
@@ -609,17 +607,6 @@ const contributions = [
 	/* Second chip in a row (e.g. arXiv + Website) gets a small gap. */
 	.paper-link + .paper-link {
 		margin-left: 0.5rem;
-	}
-
-	/* Below 40rem the credential line wraps so the photo can stay beside
-	   the text rather than dropping under it. */
-	@media (max-width: 40rem) {
-		.hero-fact {
-			white-space: normal;
-		}
-		.hero-head-text {
-			min-width: 0;
-		}
 	}
 
 	@media (max-width: 32rem) {
