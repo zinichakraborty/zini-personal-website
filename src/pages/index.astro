@@ -15,8 +15,11 @@ const papers = [
 		website: 'https://hcai-lab-gt.github.io/capabilibara/',
 		github: 'https://github.com/HCAI-Lab-GT/capabilibara',
 		huggingface: 'https://huggingface.co/spaces/HCAI-Lab-GT/capabilibara',
-		workshops:
-			'Also at COLM workshops: <a href="https://science-ai-2026.github.io/" target="_blank" rel="noopener">Sci-FM</a> and <a href="https://sites.google.com/view/social-sims-with-llms/" target="_blank" rel="noopener">Social Sim\'26</a>',
+		poster: 'Presenting at poster session',
+		workshops: [
+			{ name: 'COLM Sci-FM', link: 'https://science-ai-2026.github.io/' },
+			{ name: 'COLM Social Sim', link: 'https://sites.google.com/view/social-sims-with-llms/' },
+		],
 	},
 	{
 		title: 'On the Quantization Robustness of Diffusion Language Models in Coding Benchmarks',
@@ -208,21 +211,30 @@ const contributions = [
 						<div class="content">
 							<span class="title" title={paper.title}>{paper.title}</span>
 							<span class="authors" set:html={formatAuthors(paper)} />
-							<span class="venue">
-								<em>
-									{
-										paper.venueLink ? (
-											<a href={paper.venueLink} target="_blank" rel="noopener">
-												{paper.venue}
-											</a>
-										) : (
-											paper.venue
-										)
-									}
-								</em>
+							<div class="meta">
+								{paper.venueLink ? (
+									<a class="badge badge-venue" href={paper.venueLink} target="_blank" rel="noopener">
+										{paper.venue}
+									</a>
+								) : (
+									<span class="badge badge-venue">{paper.venue}</span>
+								)}
 								{paper.coFirst && <span class="cofirst">*Equal contribution</span>}
-							</span>
-							{paper.workshops && <span class="workshops" set:html={paper.workshops} />}
+							</div>
+							{paper.workshops && (
+								<div class="meta meta-sub">
+									{paper.workshops.map((w) => (
+										<a class="badge badge-workshop" href={w.link} target="_blank" rel="noopener">
+											{w.name}
+										</a>
+									))}
+								</div>
+							)}
+							{paper.poster && (
+								<div class="meta meta-sub">
+									<span class="badge badge-poster">{paper.poster}</span>
+								</div>
+							)}
 							<a class="paper-link" href={paper.link} target="_blank" rel="noopener">
 								{paper.link.includes('arxiv.org') ? (
 									<svg viewBox="0 0 24 24" aria-hidden="true">
@@ -482,39 +494,95 @@ const contributions = [
 		font-size: 0.92rem;
 		line-height: 1.5;
 	}
-	.venue {
-		display: block;
-		margin-top: 0.2rem;
-		font-size: 0.88rem;
-		opacity: 0.7;
+	/* Venue and status read as small squared badges, distinct from the
+	   rounded action chips below so metadata and links don't blur together. */
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.4rem 0.5rem;
+		margin-top: 0.5rem;
+	}
+	.badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.2rem 0.6rem;
+		font-size: 0.78rem;
+		font-weight: 600;
+		line-height: 1.45;
+		letter-spacing: 0.01em;
+		border-radius: 7px;
+		text-decoration: none;
+	}
+	.badge-venue {
+		color: var(--ink);
+		background: rgba(255, 255, 255, 0.07);
+		border: 1px solid var(--hairline);
+		transition:
+			background-color 0.18s ease,
+			border-color 0.18s ease;
+	}
+	a.badge-venue:hover {
+		color: var(--ink-strong);
+		background: rgba(255, 255, 255, 0.12);
+		border-color: color-mix(in srgb, var(--link) 45%, transparent);
+	}
+	/* Each metadata tier gets its own row: venue, then workshops, then the
+	   poster badge, so nothing has to share horizontal space. */
+	.meta-sub {
+		margin-top: 0.35rem;
+	}
+	.badge-poster {
+		color: var(--link);
+		background: color-mix(in srgb, var(--link) 10%, transparent);
+		border: 1px solid color-mix(in srgb, var(--link) 42%, transparent);
+	}
+	.badge-poster::before {
+		content: '';
+		flex: 0 0 auto;
+		width: 0.4rem;
+		height: 0.4rem;
+		border-radius: 50%;
+		background: currentColor;
+		box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 22%, transparent);
+	}
+	:global(:root[data-theme='light']) .badge-venue {
+		color: rgba(0, 0, 0, 0.75);
+		background: rgba(0, 0, 0, 0.04);
+	}
+	:global(:root[data-theme='light']) a.badge-venue:hover {
+		color: #000;
+		background: rgba(0, 0, 0, 0.08);
 	}
 	.cofirst {
-		margin-left: 0.5rem;
-		font-size: 0.8rem;
-		opacity: 0.7;
+		font-size: 0.78rem;
+		opacity: 0.65;
 	}
-	.venue a {
-		color: inherit;
-		text-decoration: underline;
-		text-underline-offset: 3px;
-		text-decoration-thickness: 1px;
+	/* Workshops get their own row under the venue badge, marked as a quieter
+	   tier by an outline and no fill. */
+	.badge-workshop {
+		color: var(--ink);
+		font-weight: 500;
+		font-size: 0.75rem;
+		opacity: 0.8;
+		background: transparent;
+		border: 1px dashed var(--hairline);
+		transition:
+			color 0.18s ease,
+			opacity 0.18s ease,
+			border-color 0.18s ease;
 	}
-	.workshops {
-		display: block;
-		margin-top: 0.2rem;
-		font-size: 0.88rem;
-		opacity: 0.7;
+	.badge-workshop:hover {
+		color: var(--link);
+		opacity: 1;
+		border-color: color-mix(in srgb, var(--link) 50%, transparent);
 	}
-	.workshops :global(a) {
-		color: inherit;
-		font-style: italic;
-		text-decoration: underline;
-		text-underline-offset: 3px;
-		text-decoration-thickness: 1px;
+	:global(:root[data-theme='light']) .badge-workshop {
+		color: rgba(0, 0, 0, 0.75);
 	}
-	.workshops :global(a):hover {
-		color: inherit;
-		text-decoration-thickness: 1.5px;
+	:global(:root[data-theme='light']) .badge-workshop:hover {
+		color: var(--link);
 	}
 
 	/* === Contributions === */
